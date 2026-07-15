@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>TNT SHOP</title>
+<meta name="theme-color" content="#0b0b17" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23facc15'/%3E%3Cstop offset='50%25' stop-color='%23ec4899'/%3E%3Cstop offset='100%25' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Ctext x='50' y='62' font-size='34' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3ETNT%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#08080f;
+  --card:rgba(255,255,255,.055);
+  --border:rgba(255,255,255,.13);
+  --text:#f5f5f7;
+  --muted:#a3a9bd;
+  --purple:#8b5cf6;
+  --pink:#ec4899;
+  --cyan:#22d3ee;
+  --gold:#facc15;
+  --green:#22c55e;
+  --radius:26px;
+  --shadow:0 25px 70px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent; font-family:"Vazirmatn",sans-serif;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; min-height:100vh; color:var(--text);
+  background:var(--bg); overflow-x:hidden; position:relative;
+}
+
+/* پس زمینه انیمیشنی */
+.bg-orb{position:fixed; border-radius:50%; filter:blur(70px); opacity:.55; z-index:0; pointer-events:none;}
+.orb1{width:340px;height:340px; background:var(--purple); top:-100px; right:-80px; animation:float1 12s ease-in-out infinite;}
+.orb2{width:300px;height:300px; background:var(--pink); bottom:0; left:-100px; animation:float2 14s ease-in-out infinite;}
+.orb3{width:260px;height:260px; background:var(--cyan); top:40%; right:60%; opacity:.28; animation:float3 16s ease-in-out infinite;}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,40px)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-30px)}}
+@keyframes float3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,25px) scale(1.15)}}
+
+.app{position:relative; z-index:1; max-width:520px; margin:0 auto; padding:16px 14px 110px;}
+
+/* هدر */
+.topbar{
+  position:sticky; top:0; z-index:60; margin:-16px -14px 18px; padding:14px;
+  backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+  background:linear-gradient(180deg, rgba(8,8,15,.96), rgba(8,8,15,.55));
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.brand{display:flex; align-items:center; gap:13px;}
+.logo-wrap{position:relative; width:58px; height:58px; flex:none;}
+.logo-ring{
+  position:absolute; inset:-4px; border-radius:20px;
+  background:conic-gradient(from 0deg, var(--gold), var(--pink), var(--purple), var(--cyan), var(--gold));
+  animation:spin 4s linear infinite; filter:blur(1px);
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.logo{
+  position:absolute; inset:3px; border-radius:17px; background:#0c0c18;
+  display:grid; place-items:center; overflow:hidden;
+}
+.logo span{font-weight:900; font-size:17px; letter-spacing:-1px; background:linear-gradient(135deg,var(--gold),var(--pink),var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.brand h1{margin:0; font-size:26px; font-weight:900; letter-spacing:.3px; background:linear-gradient(90deg,#fff,#c7c9ff); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.brand p{margin:6px 0 0; font-size:11.5px; color:var(--muted);}
+
+.nav{position:relative; display:grid; grid-template-columns:1fr 1fr; margin-top:16px; padding:6px; border:1px solid var(--border); border-radius:19px; background:rgba(255,255,255,.05); overflow:hidden;}
+.nav-indicator{position:absolute; top:6px; bottom:6px; width:calc(50% - 6px); border-radius:14px; background:linear-gradient(135deg,var(--purple),var(--pink)); box-shadow:0 10px 30px rgba(236,72,153,.35); transition:transform .35s cubic-bezier(.2,.9,.2,1); z-index:0;}
+.tab-btn{position:relative; z-index:1; border:0; background:transparent; color:var(--muted); padding:12px 8px; font-size:15px; font-weight:800; cursor:pointer; transition:.25s; border-radius:14px;}
+.tab-btn.active{color:#fff;}
+
+.section{display:none; animation:fadeUp .35s ease;}
+.section.active{display:block;}
+@keyframes fadeUp{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:translateY(0)}}
+
+/* هیرو / بنر پین */
+.hero{
+  position:relative; border-radius:var(--radius); padding:19px; margin-bottom:18px; overflow:hidden;
+  background:linear-gradient(160deg, rgba(139,92,246,.22), rgba(236,72,153,.14) 60%, rgba(34,211,238,.08));
+  border:1px solid rgba(255,255,255,.16); box-shadow:var(--shadow);
+}
+.hero::before{content:""; position:absolute; inset:0; background:radial-gradient(circle at 100% 0%, rgba(255,255,255,.12), transparent 45%); pointer-events:none;}
+.pin-badge{
+  display:inline-flex; align-items:center; gap:7px; padding:8px 14px; border-radius:999px; font-size:12px; font-weight:900;
+  color:#1a1200; background:linear-gradient(135deg,var(--gold),#fb923c); box-shadow:0 10px 26px rgba(250,204,21,.25);
+  margin-bottom:14px; animation:pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{box-shadow:0 10px 26px rgba(250,204,21,.25)} 50%{box-shadow:0 10px 40px rgba(250,204,21,.5)}}
+.title{font-size:20.5px; font-weight:900; margin:0 0 9px; line-height:1.7;}
+.desc{margin:0; color:var(--muted); font-size:13.7px; line-height:2.05;}
+
+/* اسلایدر */
+.carousel{margin-top:16px; position:relative; border-radius:22px; overflow:hidden; border:1px solid rgba(255,255,255,.18); box-shadow:0 15px 40px rgba(0,0,0,.4);}
+.slides{display:flex; direction:ltr; transition:transform .5s cubic-bezier(.22,.85,.25,1);}
+.slide{min-width:100%; height:320px; position:relative; background:linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); cursor:zoom-in;}
+.slide img{width:100%; height:100%; object-fit:cover; display:block; opacity:0; transition:opacity .4s ease, transform .5s ease;}
+.slide img.loaded{opacity:1;}
+.slide:active img.loaded{transform:scale(1.02);}
+.zoom-hint{position:absolute; bottom:44px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,.5); backdrop-filter:blur(6px); padding:6px 13px; border-radius:999px; font-size:11px; color:#fff; display:flex; align-items:center; gap:6px; opacity:.9; pointer-events:none;}
+
+.skeleton{position:absolute; inset:0; display:grid; place-items:center; gap:10px; background:linear-gradient(100deg, rgba(255,255,255,.03) 20%, rgba(255,255,255,.09) 40%, rgba(255,255,255,.03) 60%); background-size:250% 100%; animation:shimmer 1.6s linear infinite;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-50% 0}}
+.spinner{width:32px; height:32px; border:3px solid rgba(255,255,255,.18); border-top-color:var(--cyan); border-radius:50%; animation:spin .8s linear infinite;}
+.skeleton span{font-size:11.5px; color:var(--muted);}
+
+.dots{position:absolute; bottom:13px; left:0; right:0; display:flex; justify-content:center; gap:6px; direction:ltr; z-index:2;}
+.dot{width:7px; height:7px; border-radius:20px; border:0; background:rgba(255,255,255,.4); cursor:pointer; transition:.25s;}
+.dot.active{width:22px; background:linear-gradient(90deg,var(--gold),var(--pink));}
+
+.arrow{position:absolute; top:50%; transform:translateY(-50%); z-index:2; border:0; width:38px; height:38px; border-radius:50%; color:#fff; background:rgba(0,0,0,.4); backdrop-filter:blur(10px); cursor:pointer; font-size:21px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.15);}
+.arrow.left{left:10px;} .arrow.right{right:10px;}
+.counter{position:absolute; top:10px; left:10px; z-index:2; background:rgba(0,0,0,.5); backdrop-filter:blur(8px); padding:5px 11px; border-radius:999px; font-size:11px; font-weight:800; border:1px solid rgba(255,255,255,.15);}
+
+/* لایت‌باکس تمام صفحه */
+.lightbox{position:fixed; inset:0; z-index:999; background:rgba(2,2,8,.96); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; touch-action:none;}
+.lightbox.show{display:flex; animation:lbfade .25s ease;}
+@keyframes lbfade{from{opacity:0}to{opacity:1}}
+.lightbox img{max-width:94vw; max-height:78vh; object-fit:contain; border-radius:14px; box-shadow:0 30px 70px rgba(0,0,0,.6); touch-action:pinch-zoom;}
+.lb-close{position:absolute; top:18px; left:18px; width:42px; height:42px; border-radius:50%; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.1); color:#fff; font-size:20px; display:grid; place-items:center; cursor:pointer;}
+.lb-arrow{position:absolute; top:50%; transform:translateY(-50%); width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.1); color:#fff; font-size:26px; display:grid; place-items:center; cursor:pointer;}
+.lb-arrow.left{left:14px;} .lb-arrow.right{right:14px;}
+.lb-counter{position:absolute; bottom:22px; left:50%; transform:translateX(-50%); background:rgba(255,255,255,.12); padding:7px 16px; border-radius:999px; font-size:13px; font-weight:800; border:1px solid rgba(255,255,255,.18);}
+
+/* قیمت */
+.price-row{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:16px; padding:14px; border-radius:18px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); position:relative; overflow:hidden;}
+.price-row::after{content:""; position:absolute; top:0; left:-60%; width:40%; height:100%; background:linear-gradient(120deg, transparent, rgba(255,255,255,.18), transparent); animation:shine 3.2s ease-in-out infinite;}
+@keyframes shine{0%{left:-60%}100%{left:130%}}
+.price{font-size:21px; font-weight:900; background:linear-gradient(90deg,var(--gold),#fde68a); -webkit-background-clip:text; background-clip:text; color:transparent; white-space:nowrap;}
+
+/* کارت */
+.card{position:relative; border:1px solid var(--border); border-radius:var(--radius); background:var(--card); box-shadow:0 15px 40px rgba(0,0,0,.3); padding:18px; margin:16px 0; overflow:hidden;}
+.card::before{content:""; position:absolute; inset:0; background:radial-gradient(circle at 0% 0%, rgba(255,255,255,.09), transparent 45%); pointer-events:none;}
+.card-head{display:flex; align-items:flex-start; justify-content:space-between; gap:10px; position:relative; z-index:1;}
+.card h2{margin:0 0 8px; font-size:18px; font-weight:900; line-height:1.7;}
+.mini-badge{padding:6px 11px; border-radius:999px; font-size:11px; font-weight:900; white-space:nowrap; border:1px solid; flex:none;}
+.mini-badge.free{background:rgba(34,197,94,.15); color:#86efac; border-color:rgba(34,197,94,.3);}
+.mini-badge.paid{background:rgba(250,204,21,.15); color:#fde68a; border-color:rgba(250,204,21,.3);}
+.content{position:relative; z-index:1; color:#e6e7ee; font-size:14px; line-height:2.1; white-space:pre-line;}
+
+.features{display:grid; gap:10px; margin:15px 0; position:relative; z-index:1;}
+.feature{padding:13px; border-radius:16px; background:rgba(0,0,0,.18); border:1px solid rgba(255,255,255,.09); transition:.25s;}
+.feature:active{background:rgba(139,92,246,.15); border-color:rgba(139,92,246,.35);}
+.feature b{display:block; margin-bottom:4px; background:linear-gradient(90deg,#fff,#d9d9ff); -webkit-background-clip:text; background-clip:text; color:transparent;}
+
+.actions{display:grid; grid-template-columns:1fr; gap:10px; margin-top:16px; position:relative; z-index:1;}
+.actions.two{grid-template-columns:1fr 1fr;}
+.btn{position:relative; overflow:hidden; border:0; border-radius:17px; padding:14px 12px; color:#fff; font-size:14px; font-weight:900; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 14px 30px rgba(0,0,0,.28); transition:transform .15s ease; min-height:50px;}
+.btn:active{transform:scale(.96);}
+.btn.buy{background:linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6); background-size:200% 200%; animation:gradientMove 4s ease infinite;}
+.btn.download{background:linear-gradient(135deg,#16a34a,#14b8a6);}
+.btn.video{background:linear-gradient(135deg,#0891b2,#3b82f6);}
+@keyframes gradientMove{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.ripple{position:absolute; border-radius:50%; background:rgba(255,255,255,.5); transform:scale(0); animation:rippleAnim .6s ease-out; pointer-events:none;}
+@keyframes rippleAnim{to{transform:scale(4); opacity:0}}
+
+.video-box{margin-top:15px; border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,.15); background:#000; display:none; box-shadow:0 20px 50px rgba(0,0,0,.4);}
+.video-box.show{display:block; animation:fadeUp .4s ease;}
+.video-box iframe{width:100%; aspect-ratio:16/9; border:0; display:block;}
+
+.footer{margin-top:26px; text-align:center; color:#8b90a8; font-size:12px; line-height:2; padding:20px 10px;}
+.footer b{color:#c7c9ff;}
+
+.bottom-contact{position:fixed; left:14px; right:14px; bottom:14px; max-width:492px; margin:0 auto; z-index:70;}
+.contact-btn{position:relative; overflow:hidden; border-radius:20px; padding:16px; border:1px solid rgba(255,255,255,.2); background:linear-gradient(135deg, rgba(139,92,246,.95), rgba(236,72,153,.95)); backdrop-filter:blur(16px); color:#fff; font-weight:900; font-size:15px; box-shadow:0 20px 50px rgba(0,0,0,.4); display:flex; align-items:center; justify-content:center; gap:9px;}
+.contact-btn::before{content:""; position:absolute; inset:-2px; border-radius:22px; background:linear-gradient(135deg,var(--gold),var(--pink),var(--purple),var(--cyan)); z-index:-1; filter:blur(10px); opacity:.6; animation:spin 5s linear infinite;}
+
+@media (max-width:380px){
+  .slide{height:270px;}
+  .actions.two{grid-template-columns:1fr;}
+  .title{font-size:18px;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<div class="bg-orb orb3"></div>
+
+<main class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo-wrap">
+        <div class="logo-ring"></div>
+        <div class="logo"><span>TNT</span></div>
+      </div>
+      <div>
+        <h1>TNT SHOP</h1>
+        <p>فروشگاه محصولات و دانلود‌های ویژه TNT MOD</p>
+      </div>
+    </div>
+
+    <nav class="nav" id="navTabs">
+      <div class="nav-indicator" id="navIndicator"></div>
+      <button class="tab-btn active" data-tab="shop">🛒 فروشگاه</button>
+      <button class="tab-btn" data-tab="free">🎁 رایگان</button>
+    </nav>
+  </header>
+
+  <!-- فروشگاه -->
+  <section id="shop" class="section active">
+
+    <article class="hero">
+      <div class="pin-badge">📌 پیشنهاد ویژه پین شده</div>
+      <h2 class="title">خرید اکانت شب‌های مافیا</h2>
+      <p class="desc">اکانت خاص و ارزشمند شب‌های مافیا. برای مشاهده کامل تصاویر روی هرکدام تپ کنید تا بزرگ‌شان ببینید.</p>
+
+      <div class="carousel" id="mafiaCarousel">
+        <div class="counter" id="slideCounter">۱ / ۶</div>
+        <div class="slides" id="slidesWrap">
+          <div class="slide" data-idx="0">
+            <div class="skeleton"><div class="spinner"></div><span>در حال بارگذاری تصویر...</span></div>
+            <img data-src="https://uploadkon.ir/uploads/19f211_26IMG-20260711-164816-241.jpg" alt="اکانت شب های مافیا 1">
+          </div>
+          <div class="slide" data-idx="1">
+            <div class="skeleton"><div class="spinner"></div><span>در حال بارگذاری تصویر...</span></div>
+            <img data-src="https://uploadkon.ir/uploads/dd6b11_26IMG-20260711-164815-736.jpg" alt="اکانت شب های مافیا 2">
+          </div>
+          <div class="slide" data-idx="2">
+            <div class="skeleton"><div class="spinner"></div><span>در حال بارگذاری تصویر...</span></div>
+            <img data-src="https://uploadkon.ir/uploads/d9f911_26IMG-20260711-164812-842.jpg" alt="اکانت شب های مافیا 3">
+          </div>
+          <div class="slide" data-idx="3">
+            <div class="skeleton"><div class="spinner"></div><span>در حال بارگذاری تصویر...</span></div>
+            <img data-src="https://uploadkon.ir/uploads/648e11_26IMG-20260711-164811-760.jpg" alt="اکانت شب های مافیا 4">
+          </div>
+          <div class="slide" data-idx="4">
+            <div class="skeleton"><div class="spinner"></div><span>در حال بارگذاری تصویر...</span></div>
+            <img data-src="https://uploadkon.ir/uploads/362311_26IMG-20260711-164807-196.jpg" alt="اکانت شب های مافیا 5">
+          </div>
+          <div class="slide" data-idx="5">
+            <div class="skeleton"><div class="spinner"></div><span>در حال بارگذاری تصویر...</span></div>
+            <img data-src="https://uploadkon.ir/uploads/487511_26IMG-20260711-164804-277.jpg" alt="اکانت شب های مافیا 6">
+          </div>
+        </div>
+
+        <div class="zoom-hint">👆 برای دیدن کامل، تپ کنید</div>
+        <button class="arrow left" id="nextSlide">‹</button>
+        <button class="arrow right" id="prevSlide">›</button>
+        <div class="dots" id="dots"></div>
+      </div>
+
+      <div class="price-row">
+        <div>
+          <strong>قیمت اکانت</strong>
+          <p class="desc" style="margin-top:4px;font-size:12px">برای خرید به روبیکا پیام دهید.</p>
+        </div>
+        <div class="price">۵,۰۰۰,۰۰۰ تومان</div>
+      </div>
+
+      <div class="actions">
+        <a class="btn buy rip" href="https://rubika.ir/@Im_rubikaa" target="_blank" rel="noopener">🛍️ خرید اکانت</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <h2>آپدیت جدید چیت FC ⚡</h2>
+          <p class="desc">نسخه جدید 27.0.03 با رفع مشکلات و بهبود عملکرد</p>
+        </div>
+        <span class="mini-badge paid">پولی</span>
+      </div>
+
+      <div class="content">آپدیت تازه چیت FC منتشر شد 😱⚡
+
+ورژن جدید: 27.0.03
+
+✅ رفع مشکلات قبلی
+✅ بهبود عملکرد
+✅ برطرف شدن مشکل دیر تمام شدن بازی بعد از فعال‌سازی پایان فوری
+✅ در این آپدیت پلیرهای شما مانند حریف فریز نخواهند شد</div>
+
+      <div class="features">
+        <div class="feature"><b>Instant Full Time ⏱️</b><span class="desc">پایان فوری بازی؛ هر زمان که بخواهید مسابقه را تمام کنید.</span></div>
+        <div class="feature"><b>Freeze Goal Keeper 🧤</b><span class="desc">قفل شدن دروازه‌بان حریف برای موقعیت‌های بهتر گلزنی.</span></div>
+        <div class="feature"><b>Weak Players 📉</b><span class="desc">کاهش قدرت و سرعت بازیکنان حریف برای کنترل بهتر بازی.</span></div>
+        <div class="feature"><b>Freeze Time ⏳</b><span class="desc">توقف زمان برای استفاده بهینه از موقعیت‌ها.</span></div>
+      </div>
+
+      <div class="price-row">
+        <strong>قیمت محصول</strong>
+        <div class="price">۸۰ T</div>
+      </div>
+
+      <div class="actions">
+        <a class="btn buy rip" href="https://rubika.ir/@Im_rubikaa" target="_blank" rel="noopener">💬 خرید از روبیکا</a>
+      </div>
+    </article>
+  </section>
+
+  <!-- رایگان -->
+  <section id="free" class="section">
+
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <h2>دیار باقی مود شده 💸</h2>
+          <p class="desc">آموزش و دانلود رایگان</p>
+        </div>
+        <span class="mini-badge free">رایگان</span>
+      </div>
+
+      <div class="content">ویدیوی آموزشی بی‌نهایت کردن سکه در بازی دیار باقی مود شده آماده است 😱
+
+ساخته شده توسط TNT MOD
+بروزترین چنل چیت گیمینگ ✅</div>
+
+      <div class="actions two">
+        <button class="btn video rip" id="showVideoBtn">▶️ آموزش ویدیویی</button>
+        <a class="btn download rip" href="https://rubika.ir/ZODIAC_MAFIANIGHTS/BICEJCFHDHJCGJAF" target="_blank" rel="noopener">⬇️ دانلود چیت گیم</a>
+      </div>
+
+      <div class="video-box" id="videoBox">
+        <iframe id="aparatFrame" title="آموزش ویدیویی دیار باقی" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <h2>دانلود مود تاکسی 3 🚕</h2>
+          <p class="desc">برای دریافت فایل روی دکمه زیر بزنید.</p>
+        </div>
+        <span class="mini-badge free">رایگان</span>
+      </div>
+      <div class="actions">
+        <a class="btn download rip" href="https://rubika.ir/ZODIAC_MAFIANIGHTS/BIBDCDGICJGEEJAF" target="_blank" rel="noopener">⬇️ دانلود مود تاکسی 3</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <h2>دانلود چیت فار لند 🌍</h2>
+          <p class="desc">دکمه دانلود، لینک موردنظر را در روبیکا باز می‌کند.</p>
+        </div>
+        <span class="mini-badge free">رایگان</span>
+      </div>
+      <div class="actions">
+        <a class="btn download rip" href="https://rubika.ir/ZODIAC_MAFIANIGHTS/BIBDCCCICCFCEJAF" target="_blank" rel="noopener">⬇️ دانلود چیت فار لند</a>
+      </div>
+    </article>
+
+  </section>
+
+  <footer class="footer">
+    <b>TNT SHOP</b> © ساخته شده برای TNT MOD
+    <br>برای خرید محصولات پولی، از طریق روبیکا پیام دهید.
+  </footer>
+</main>
+
+<div class="bottom-contact">
+  <a class="contact-btn rip" href="https://rubika.ir/@Im_rubikaa" target="_blank" rel="noopener">💬 ارتباط و خرید در روبیکا</a>
+</div>
+
+<!-- لایت‌باکس -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">✕</button>
+  <button class="lb-arrow left" id="lbNext">‹</button>
+  <img id="lbImage" src="" alt="نمای بزرگ تصویر">
+  <button class="lb-arrow right" id="lbPrev">›</button>
+  <div class="lb-counter" id="lbCounter">۱ / ۶</div>
+</div>
+
+<script>
+/* ---------- تب‌ها با ایندیکیتور متحرک ---------- */
+const tabButtons = document.querySelectorAll(".tab-btn");
+const sections = document.querySelectorAll(".section");
+const navIndicator = document.getElementById("navIndicator");
+
+function moveIndicator(btn){
+  navIndicator.style.transform = `translateX(${btn.dataset.tab === "shop" ? "0%" : "-100%"})`;
+}
+moveIndicator(document.querySelector(".tab-btn.active"));
+
+tabButtons.forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    tabButtons.forEach(b=>b.classList.remove("active"));
+    sections.forEach(s=>s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+    moveIndicator(btn);
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+});
+
+/* ---------- ریپل روی دکمه‌ها ---------- */
+document.querySelectorAll(".rip").forEach(el=>{
+  el.addEventListener("click", function(e){
+    const rect = this.getBoundingClientRect();
+    const ripple = document.createElement("span");
+    ripple.className = "ripple";
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size+"px";
+    ripple.style.left = (e.clientX - rect.left - size/2)+"px";
+    ripple.style.top = (e.clientY - rect.top - size/2)+"px";
+    this.appendChild(ripple);
+    setTimeout(()=>ripple.remove(), 650);
+  });
+});
+
+/* ---------- لود عکس‌ها با تلاش مجدد ---------- */
+function loadImage(img){
+  const skeleton = img.previousElementSibling;
+  let tries = 0;
+  const src = img.dataset.src;
+
+  function apply(url){
+    img.src = url;
+  }
+
+  function onLoad(){
+    img.classList.add("loaded");
+    if(skeleton) skeleton.style.display = "none";
+  }
+
+  function onError(){
+    tries++;
+    if(tries <= 4){
+      setTimeout(()=> apply(src + "?retry=" + Date.now()), 900);
+    } else if(skeleton){
+      skeleton.innerHTML = "<span>⚠️ تصویر لود نشد، اتصال اینترنت را بررسی کنید</span>";
+    }
+  }
+
+  img.addEventListener("load", onLoad);
+  img.addEventListener("error", onError);
+  apply(src);
+}
+document.querySelectorAll(".slide img").forEach(loadImage);
+
+/* ---------- اسلایدر ---------- */
+const carousel = document.getElementById("mafiaCarousel");
+const slidesWrap = document.getElementById("slidesWrap");
+const slideEls = carousel.querySelectorAll(".slide");
+const dotsWrap = document.getElementById("dots");
+const nextBtn = document.getElementById("nextSlide");
+const prevBtn = document.getElementById("prevSlide");
+const slideCounter = document.getElementById("slideCounter");
+const total = slideEls.length;
+let current = 0;
+let autoTimer = null;
+
+const faDigits = n => n.toString().replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+
+slideEls.forEach((_, i) => {
+  const dot = document.createElement("button");
+  dot.className = "dot" + (i===0 ? " active":"");
+  dot.addEventListener("click", ()=> goToSlide(i));
+  dotsWrap.appendChild(dot);
+});
+const dots = dotsWrap.querySelectorAll(".dot");
+
+function updateCounter(){
+  slideCounter.textContent = `${faDigits(current+1)} / ${faDigits(total)}`;
+}
+
+function goToSlide(index){
+  current = (index + total) % total;
+  slidesWrap.style.transform = `translateX(-${current*100}%)`;
+  dots.forEach(d=>d.classList.remove("active"));
+  dots[current].classList.add("active");
+  updateCounter();
+}
+
+function startAuto(){
+  clearInterval(autoTimer);
+  autoTimer = setInterval(()=> goToSlide(current+1), 5000);
+}
+function stopAuto(){ clearInterval(autoTimer); }
+
+nextBtn.addEventListener("click", ()=>{ goToSlide(current+1); startAuto(); });
+prevBtn.addEventListener("click", ()=>{ goToSlide(current-1); startAuto(); });
+
+let startX=0, endX=0;
+carousel.addEventListener("touchstart", e=>{ startX = e.touches[0].clientX; }, {passive:true});
+carousel.addEventListener("touchend", e=>{
+  endX = e.changedTouches[0].clientX;
+  const diff = startX - endX;
+  if(Math.abs(diff) > 40){
+    diff > 0 ? goToSlide(current+1) : goToSlide(current-1);
+    startAuto();
+  }
+}, {passive:true});
+
+startAuto();
+updateCounter();
+
+/* ---------- لایت‌باکس تمام‌صفحه ---------- */
+const lightbox = document.getElementById("lightbox");
+const lbImage = document.getElementById("lbImage");
+const lbClose = document.getElementById("lbClose");
+const lbNext = document.getElementById("lbNext");
+const lbPrev = document.getElementById("lbPrev");
+const lbCounter = document.getElementById("lbCounter");
+const imgSources = Array.from(slideEls).map(s => s.querySelector("img").dataset.src);
+let lbIndex = 0;
+
+function openLightbox(index){
+  lbIndex = index;
+  lbImage.src = imgSources[lbIndex];
+  lbCounter.textContent = `${faDigits(lbIndex+1)} / ${faDigits(total)}`;
+  lightbox.classList.add("show");
+  stopAuto();
+  document.body.style.overflow = "hidden";
+}
+function closeLightbox(){
+  lightbox.classList.remove("show");
+  document.body.style.overflow = "";
+  startAuto();
+}
+function lbGo(step){
+  lbIndex = (lbIndex + step + total) % total;
+  lbImage.src = imgSources[lbIndex];
+  lbCounter.textContent = `${faDigits(lbIndex+1)} / ${faDigits(total)}`;
+}
+
+slideEls.forEach((slide, i)=>{
+  slide.addEventListener("click", ()=> openLightbox(i));
+});
+lbClose.addEventListener("click", closeLightbox);
+lightbox.addEventListener("click", e=>{ if(e.target === lightbox) closeLightbox(); });
+lbNext.addEventListener("click", ()=> lbGo(-1));
+lbPrev.addEventListener("click", ()=> lbGo(1));
+
+let lbStartX = 0;
+lightbox.addEventListener("touchstart", e=>{ lbStartX = e.touches[0].clientX; }, {passive:true});
+lightbox.addEventListener("touchend", e=>{
+  const diff = lbStartX - e.changedTouches[0].clientX;
+  if(Math.abs(diff) > 40){ diff > 0 ? lbGo(-1) : lbGo(1); }
+}, {passive:true});
+
+document.addEventListener("keydown", e=>{
+  if(!lightbox.classList.contains("show")) return;
+  if(e.key === "Escape") closeLightbox();
+  if(e.key === "ArrowLeft") lbGo(-1);
+  if(e.key === "ArrowRight") lbGo(1);
+});
+
+/* ---------- ویدیوی آپارات ---------- */
+const showVideoBtn = document.getElementById("showVideoBtn");
+const videoBox = document.getElementById("videoBox");
+const aparatFrame = document.getElementById("aparatFrame");
+
+showVideoBtn.addEventListener("click", ()=>{
+  videoBox.classList.add("show");
+  if(!aparatFrame.src){
+    aparatFrame.src = "https://www.aparat.com/video/video/embed/videohash/jarsd68/vt/frame";
+  }
+  setTimeout(()=> videoBox.scrollIntoView({behavior:"smooth", block:"center"}), 150);
+});
+</script>
+</body>
+</html>
