@@ -44,12 +44,14 @@ textarea::placeholder{color:#555}
 .btn-primary svg{width:18px;height:18px}
 .btn-ghost{background:transparent;border:1px solid var(--card-border);color:var(--text-dim);padding:14px 20px;border-radius:12px;font-size:14px;cursor:pointer;transition:all .15s}
 .btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
-.status{margin-top:16px;padding:12px 14px;border-radius:10px;font-size:13.5px;display:flex;align-items:center;gap:10px}
+.status{margin-top:16px;padding:14px;border-radius:10px;font-size:13.5px;display:flex;align-items:center;gap:10px;line-height:1.5}
 .status.loading{background:rgba(0,212,255,.1);color:var(--accent-2);border:1px solid rgba(0,212,255,.2)}
 .status.error{background:rgba(255,84,112,.1);color:var(--danger);border:1px solid rgba(255,84,112,.2)}
 .status.success{background:rgba(0,230,118,.1);color:var(--success);border:1px solid rgba(0,230,118,.2)}
 .spinner{width:14px;height:14px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
+.progress{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-top:8px}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0;transition:width .3s}
 .result{margin-top:20px;padding:18px;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:12px;animation:pop .3s ease}
 @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .result-label{color:var(--success);font-size:13px;font-weight:600;margin-bottom:10px}
@@ -110,6 +112,7 @@ textarea::placeholder{color:#555}
 <span class="filename">index.html</span>
 <div class="bar-spacer"></div>
 <button id="loadSampleBtn" class="bar-btn">Load sample</button>
+<button id="clearInputBtn" class="bar-btn">Clear</button>
 </div>
 <textarea id="htmlInput" spellcheck="false" placeholder="<!DOCTYPE html>&#10;<html>&#10;  <body>&#10;    <h1>Hello world!</h1>&#10;  </body>&#10;</html>"></textarea>
 </div>
@@ -121,13 +124,12 @@ textarea::placeholder{color:#555}
 </svg>
 <span>Deploy &amp; Get Link</span>
 </button>
-<button id="clearBtn" class="btn-ghost">Clear</button>
 </div>
 
 <div id="status" class="status hidden"></div>
 
 <div id="result" class="result hidden">
-<div class="result-label">🎉 Your site is live</div>
+<div class="result-label">🎉 Your site is live!</div>
 <div class="link-box">
 <a id="liveLink" href="#" target="_blank" rel="noopener"></a>
 <button id="copyBtn" class="btn-copy" title="Copy link">
@@ -136,13 +138,14 @@ textarea::placeholder{color:#555}
 </svg>
 </button>
 </div>
-<div class="result-hint">Your page is deployed on GitHub Pages. The link is permanent and shareable.</div>
+<div class="result-hint">The link is permanent and shareable. Click to verify it loads correctly.</div>
 </div>
 
 <details class="howto">
 <summary>How it works</summary>
-<p>Your HTML is uploaded as a file in the <code>html-deploy</code> GitHub repo, and GitHub Pages serves it as a real public webpage. Each deploy gets a unique URL.</p>
-<p><b>Token storage:</b> Your GitHub token is saved only in this browser's localStorage. It never leaves your device except to talk to GitHub's API directly.</p>
+<p>Your HTML is uploaded as a new file in the <code>html-deploy</code> GitHub repo, then served by GitHub Pages. Each deploy gets a unique URL like <code>.../sites/abc123/</code>.</p>
+<p>After clicking Deploy, the app waits up to 60 seconds for GitHub Pages to actually serve the new file (it usually takes 10-30s). Once verified, the link is shown.</p>
+<p><b>Token storage:</b> Your GitHub token is saved only in this browser's localStorage and used directly to talk to GitHub's API.</p>
 </details>
 </main>
 
@@ -161,9 +164,6 @@ textarea::placeholder{color:#555}
 </div>
 
 <script>
-// ============================================================
-// Instant HTML Deployer - GitHub Pages Backend
-// ============================================================
 const REPO_OWNER = "s09383181-ship-it";
 const REPO_NAME  = "html-deploy";
 const BRANCH     = "main";
@@ -172,9 +172,9 @@ const USER_KEY   = "gh_user_v1";
 
 const input       = document.getElementById("htmlInput");
 const deployBtn   = document.getElementById("deployBtn");
-const clearBtn    = document.getElementById("clearBtn");
 const copyBtn     = document.getElementById("copyBtn");
 const sampleBtn   = document.getElementById("loadSampleBtn");
+const clearInputBtn = document.getElementById("clearInputBtn");
 const statusEl    = document.getElementById("status");
 const resultEl    = document.getElementById("result");
 const liveLinkEl  = document.getElementById("liveLink");
@@ -186,8 +186,6 @@ const tokenModal  = document.getElementById("tokenModal");
 const tokenInput  = document.getElementById("tokenInput");
 const saveTokenBtn = document.getElementById("saveTokenBtn");
 const cancelTokenBtn = document.getElementById("cancelTokenBtn");
-
-const SAMPLE = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>My Site</title><style>body{font-family:system-ui;margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;text-align:center}h1{font-size:3rem;margin:0}p{opacity:.85}</style></head><body><div><h1>🎉 It works!</h1><p>This page is now live on the real internet.</p></div></body></html>';
 
 let currentUrl = null;
 
@@ -252,8 +250,9 @@ async function api(path, opts = {}) {
     }
   });
   if (!res.ok) {
-    const txt = await res.text();
-    throw new Error("GitHub API " + res.status + ": " + txt.slice(0, 200));
+    let txt = "";
+    try { txt = (await res.json()).message || ""; } catch(e) { txt = await res.text().catch(()=>""); }
+    throw new Error("GitHub API " + res.status + ": " + txt);
   }
   return res.json();
 }
@@ -266,6 +265,29 @@ async function validateAndGetUser() {
   return me.login;
 }
 
+// Poll the live URL until GitHub Pages serves it, or timeout
+async function waitUntilLive(url, maxWaitMs = 90000) {
+  const start = Date.now();
+  let attempt = 0;
+  while (Date.now() - start < maxWaitMs) {
+    attempt++;
+    const elapsed = Math.floor((Date.now() - start) / 1000);
+    showStatus("loading",
+      '<div class="spinner"></div><span><b>Step 2/2:</b> Waiting for GitHub Pages... (attempt ' + attempt + ', ' + elapsed + 's)</span>' +
+      '<div class="progress"><div class="progress-bar" style="width:' + Math.min(95, (elapsed/60)*100) + '%"></div></div>'
+    );
+    try {
+      const res = await fetch(url, { method: "GET", cache: "no-store" });
+      if (res.ok) {
+        const text = await res.text();
+        if (text.length > 50 && !text.includes("404")) return true;
+      }
+    } catch (e) { /* ignore */ }
+    await new Promise(r => setTimeout(r, 3000));
+  }
+  return false;
+}
+
 async function deploy() {
   const html = input.value.trim();
   if (!html) { showStatus("error", "⚠️ Please paste some HTML first."); return; }
@@ -273,23 +295,24 @@ async function deploy() {
 
   hideResult();
   setDeploying(true);
-  showStatus("loading", '<div class="spinner"></div><span>Verifying token & creating file...</span>');
+  showStatus("loading", '<div class="spinner"></div><span><b>Step 1/2:</b> Verifying token & uploading file to GitHub...</span>');
 
   try {
-    // First-time user check + cache
     if (!getUser()) {
       const u = await validateAndGetUser();
       setToken(getToken(), u);
     }
 
-    // Build a unique path: sites/<random>/index.html
     const id = rand();
     const path = "sites/" + id + "/index.html";
     const apiPath = "/repos/" + REPO_OWNER + "/" + REPO_NAME + "/contents/" + path;
 
     const contentB64 = btoa(unescape(encodeURIComponent(html)));
 
-    showStatus("loading", '<div class="spinner"></div><span>Uploading to GitHub...</span>');
+    showStatus("loading",
+      '<div class="spinner"></div><span><b>Step 1/2:</b> Uploading to GitHub as <code>' + id + '</code>...</span>' +
+      '<div class="progress"><div class="progress-bar" style="width:10%"></div></div>'
+    );
 
     await api(apiPath, {
       method: "PUT",
@@ -303,9 +326,18 @@ async function deploy() {
 
     const liveUrl = "https://" + REPO_OWNER + ".github.io/" + REPO_NAME + "/sites/" + id + "/";
 
-    hideStatus();
-    showResult(liveUrl);
-    showStatus("success", "✅ Deployed! GitHub Pages is propagating the change (usually takes 10-30 seconds).");
+    const ok = await waitUntilLive(liveUrl, 90000);
+
+    if (ok) {
+      hideStatus();
+      showResult(liveUrl);
+    } else {
+      showStatus("error",
+        "⏰ GitHub Pages didn't serve the file within 90 seconds. " +
+        "The file IS uploaded — try opening the link manually in a few minutes: " +
+        '<br><a href="' + liveUrl + '" target="_blank" style="color:inherit;text-decoration:underline">' + liveUrl + '</a>'
+      );
+    }
   } catch (e) {
     console.error(e);
     showStatus("error", "❌ " + e.message);
@@ -355,9 +387,12 @@ tokenInput.addEventListener("keydown", e => { if (e.key === "Enter") saveTokenBt
 tokenModal.addEventListener("click", e => { if (e.target === tokenModal) closeTokenModal(); });
 
 deployBtn.addEventListener("click", deploy);
-clearBtn.addEventListener("click", () => { input.value = ""; hideStatus(); hideResult(); currentUrl = null; input.focus(); });
+clearInputBtn.addEventListener("click", () => { input.value = ""; input.focus(); });
 copyBtn.addEventListener("click", copyLink);
-sampleBtn.addEventListener("click", () => { input.value = SAMPLE; input.focus(); });
+sampleBtn.addEventListener("click", () => {
+  input.value = '<!DOCTYPE html><html><head><title>Hi</title><style>body{font-family:system-ui;margin:0;min-height:100vh;display:grid;place-items:center;background:#667eea;color:#fff;text-align:center}h1{font-size:3rem}</style></head><body><div><h1>🎉 It works!</h1><p>Deployed!</p></div></body></html>';
+  input.focus();
+});
 input.addEventListener("keydown", e => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); deploy(); } });
 
 updateTokenBar();
