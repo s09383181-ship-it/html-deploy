@@ -2,1935 +2,253 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#ff5722">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="TNT MOD">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="description" content="TNT MOD - اپلیکیشن حرفه‌ای ساخت و دیپلوی صفحات وب">
-<title>TNT MOD.... | اپلیکیشن ساخت و دیپلوی</title>
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/svg+xml" href="icon.svg">
-<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNT MOD - دیپلوی HTML</title>
+<meta name="theme-color" content="#7c3aed">
 <style>
-/* === TNT MOD Styles - فارسی RTL با تم آتش === */
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-  --bg-0:#0a0506;
-  --bg-1:#14090a;
-  --bg-2:#1f1011;
-  --card:rgba(255,87,34,.05);
-  --card-2:rgba(255,87,34,.08);
-  --card-border:rgba(255,87,34,.15);
-  --text:#fff5f0;
-  --text-dim:#c9a99a;
-  --text-faint:#7a6058;
-  --accent:#ff5722;
-  --accent-2:#ff9800;
-  --accent-3:#ffb74d;
-  --success:#00e676;
-  --danger:#ff1744;
-  --warn:#ffc107;
-  --fire-1:#ff3d00;
-  --fire-2:#ff6e40;
-  --fire-3:#ffab00;
-  --shadow-fire:0 0 30px rgba(255,87,34,.4);
-  --shadow-deep:0 20px 60px rgba(0,0,0,.6);
-  --r-sm:8px;--r-md:14px;--r-lg:20px;--r-xl:28px;
-  --t:.25s cubic-bezier(.4,0,.2,1);
-}
-html,body{height:100%;overflow:hidden}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-  font-family:'Vazirmatn','IRANSans','Tahoma',-apple-system,BlinkMacSystemFont,sans-serif;
-  background:var(--bg-0);color:var(--text);
-  display:flex;flex-direction:column;
-  position:relative;overflow:hidden;
-  user-select:none;-webkit-user-select:none;
+  font-family:'Segoe UI','Tahoma',sans-serif;
+  background:#0a0a14;color:#e8e8f0;
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:20px;position:relative;overflow-x:hidden;
 }
-@font-face{
-  font-family:'Vazirmatn';
-  src:url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2');
-  font-weight:400;font-display:swap;
+.bg{
+  position:fixed;inset:0;z-index:-1;
+  background:
+    radial-gradient(ellipse at 20% 30%,rgba(124,58,237,.25),transparent 50%),
+    radial-gradient(ellipse at 80% 70%,rgba(236,72,153,.20),transparent 50%),
+    radial-gradient(ellipse at 50% 100%,rgba(34,211,238,.15),transparent 50%),
+    #0a0a14;
 }
-@font-face{
-  font-family:'Vazirmatn';
-  src:url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2');
-  font-weight:700;font-display:swap;
-}
-@font-face{
-  font-family:'Vazirmatn';
-  src:url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Black.woff2') format('woff2');
-  font-weight:900;font-display:swap;
-}
-
-/* === پس‌زمینه آتش === */
-.bg-fire{position:fixed;inset:0;z-index:-2;background:
-  radial-gradient(ellipse at 20% 100%,rgba(255,61,0,.4) 0%,transparent 50%),
-  radial-gradient(ellipse at 80% 100%,rgba(255,110,64,.3) 0%,transparent 50%),
-  radial-gradient(ellipse at 50% 50%,rgba(255,171,0,.1) 0%,transparent 70%),
-  linear-gradient(180deg,#0a0506 0%,#14090a 50%,#1f1011 100%);
-  animation:bgPulse 8s ease-in-out infinite alternate;
-}
-@keyframes bgPulse{
-  0%{filter:brightness(1) hue-rotate(0deg)}
-  100%{filter:brightness(1.1) hue-rotate(10deg)}
-}
-.bg-particles{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
-.particle{
-  position:absolute;width:4px;height:4px;
-  background:radial-gradient(circle,var(--fire-3),transparent);
-  border-radius:50%;
-  animation:float 8s infinite ease-in-out;
-  opacity:0;
-}
-@keyframes float{
-  0%{transform:translateY(100vh) scale(0);opacity:0}
-  10%{opacity:.8}
-  90%{opacity:.4}
-  100%{transform:translateY(-10vh) scale(1.5);opacity:0}
-}
-
-/* === App Shell === */
-.app{display:flex;flex-direction:column;height:100vh;height:100dvh;position:relative}
-
-/* === هدر === */
-.app-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 20px;background:linear-gradient(180deg,rgba(20,9,10,.95),rgba(20,9,10,.7));
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--card-border);
-  position:relative;z-index:10;
-}
-.brand{display:flex;align-items:center;gap:12px}
-.brand-icon{
-  width:44px;height:44px;
-  background:linear-gradient(135deg,var(--fire-1),var(--fire-2),var(--fire-3));
-  border-radius:12px;display:grid;place-items:center;
-  font-size:24px;font-weight:900;color:#fff;
-  box-shadow:0 0 24px rgba(255,87,34,.5),inset 0 0 12px rgba(255,255,255,.1);
-  position:relative;overflow:hidden;
-  animation:iconGlow 3s ease-in-out infinite alternate;
-}
-@keyframes iconGlow{
-  0%{box-shadow:0 0 20px rgba(255,87,34,.4),inset 0 0 8px rgba(255,255,255,.1)}
-  100%{box-shadow:0 0 36px rgba(255,87,34,.7),inset 0 0 16px rgba(255,255,255,.2)}
-}
-.brand-icon::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,.3) 50%,transparent 70%);
-  animation:shine 3s linear infinite;
-}
-@keyframes shine{
-  0%{transform:translateX(-100%) translateY(-100%)}
-  100%{transform:translateX(100%) translateY(100%)}
-}
-.brand-text{display:flex;flex-direction:column;gap:2px}
-.brand-name{font-size:18px;font-weight:900;background:linear-gradient(135deg,var(--fire-1),var(--fire-3));-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.5px}
-.brand-sub{font-size:10px;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase}
-.header-actions{display:flex;gap:8px}
-.icon-btn{
-  width:40px;height:40px;border-radius:12px;
-  background:var(--card);border:1px solid var(--card-border);
-  color:var(--text);cursor:pointer;
-  display:grid;place-items:center;
-  transition:all var(--t);
-  position:relative;overflow:hidden;
-}
-.icon-btn:hover{background:var(--card-2);transform:scale(1.05)}
-.icon-btn:active{transform:scale(.95)}
-.icon-btn svg{width:18px;height:18px}
-
-/* === محتوای اصلی === */
-.app-main{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:20px;padding-bottom:100px}
-.app-main::-webkit-scrollbar{width:6px}
-.app-main::-webkit-scrollbar-track{background:transparent}
-.app-main::-webkit-scrollbar-thumb{background:var(--card-border);border-radius:3px}
-
-/* === تب‌ها (Navigation پایین) === */
-.tab-bar{
-  position:absolute;bottom:0;left:0;right:0;
-  display:flex;justify-content:space-around;align-items:center;
-  padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom));
-  background:linear-gradient(180deg,rgba(20,9,10,.7) 0%,rgba(20,9,10,.95) 100%);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-top:1px solid var(--card-border);
-  z-index:10;
-}
-.tab{
-  flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
-  padding:8px 4px;border:none;background:none;
-  color:var(--text-faint);font-size:11px;font-weight:600;cursor:pointer;
-  transition:all var(--t);position:relative;border-radius:12px;
-  font-family:inherit;
-}
-.tab svg{width:22px;height:22px;transition:all var(--t)}
-.tab.active{color:var(--accent-3)}
-.tab.active svg{filter:drop-shadow(0 0 8px var(--fire-2));transform:scale(1.1)}
-.tab::before{
-  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%) scaleX(0);
-  width:30px;height:3px;border-radius:0 0 3px 3px;
-  background:linear-gradient(90deg,var(--fire-1),var(--fire-3));
-  transition:transform var(--t);
-}
-.tab.active::before{transform:translateX(-50%) scaleX(1)}
-
-/* === صفحات === */
-.page{display:none;animation:pageIn .4s ease-out}
-.page.active{display:block}
-@keyframes pageIn{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-/* === کارت‌ها === */
 .card{
-  background:linear-gradient(135deg,var(--card) 0%,var(--card-2) 100%);
-  border:1px solid var(--card-border);border-radius:var(--r-lg);
-  padding:20px;margin-bottom:16px;position:relative;overflow:hidden;
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  width:100%;max-width:640px;
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;padding:32px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
 }
-.card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--card-border),transparent);
+.header{text-align:center;margin-bottom:24px}
+.logo{
+  width:60px;height:60px;margin:0 auto 16px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  border-radius:16px;display:grid;place-items:center;
+  font-size:28px;
+  box-shadow:0 8px 24px rgba(124,58,237,.4);
 }
-.card-title{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;margin-bottom:12px;color:var(--text)}
-.card-title svg{width:18px;height:18px;color:var(--accent-3)}
-.card-subtitle{font-size:12px;color:var(--text-dim);margin-bottom:14px;line-height:1.7}
-
-/* === Hero (صفحه اصلی) === */
-.hero{
-  text-align:center;padding:30px 20px;
-  background:radial-gradient(ellipse at center top,rgba(255,87,34,.15),transparent 70%);
-  border-radius:var(--r-xl);margin-bottom:20px;position:relative;
+h1{
+  font-size:26px;font-weight:700;margin-bottom:6px;
+  background:linear-gradient(135deg,#a78bfa,#f472b6);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-.hero-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:var(--card-2);border:1px solid var(--card-border);
-  padding:5px 12px;border-radius:20px;font-size:11px;color:var(--accent-3);
-  margin-bottom:16px;font-weight:600;
+.subtitle{color:#8a8a9e;font-size:14px}
+textarea{
+  width:100%;min-height:240px;
+  background:#0d0d1a;border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:16px;
+  color:#e8e8f0;font-family:'Courier New',monospace;
+  font-size:13.5px;line-height:1.6;
+  outline:none;resize:vertical;transition:all .25s;
 }
-.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--success);box-shadow:0 0 8px var(--success);animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.hero h1{font-size:32px;font-weight:900;background:linear-gradient(135deg,var(--fire-1),var(--fire-3));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px;line-height:1.2;letter-spacing:-1px}
-.hero p{color:var(--text-dim);font-size:14px;line-height:1.7;max-width:400px;margin:0 auto}
-
-/* === دکمه‌ها === */
+textarea:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+textarea::placeholder{color:#555}
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:12px 20px;border-radius:var(--r-md);
-  font-size:14px;font-weight:700;font-family:inherit;
-  border:none;cursor:pointer;
-  transition:all var(--t);
-  position:relative;overflow:hidden;
-  text-decoration:none;width:100%;
+  width:100%;padding:14px;margin-top:16px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  color:#fff;border:none;border-radius:12px;
+  font-size:15px;font-weight:600;cursor:pointer;
+  transition:all .25s;
+  box-shadow:0 6px 20px rgba(124,58,237,.35);
 }
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-primary{
-  background:linear-gradient(135deg,var(--fire-1),var(--fire-2));
-  color:#fff;
-  box-shadow:0 6px 20px rgba(255,87,34,.35);
+.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 28px rgba(124,58,237,.5)}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.status{
+  margin-top:16px;padding:12px;border-radius:10px;
+  font-size:13.5px;display:flex;align-items:center;gap:10px;
 }
-.btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,87,34,.5)}
-.btn-primary:active:not(:disabled){transform:translateY(0)}
-.btn-primary::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,.3) 50%,transparent 70%);
-  transform:translateX(-100%);transition:transform .6s;
-}
-.btn-primary:hover:not(:disabled)::before{transform:translateX(100%)}
-.btn-secondary{
-  background:var(--card);color:var(--text);
-  border:1px solid var(--card-border);
-}
-.btn-secondary:hover{background:var(--card-2);border-color:var(--accent)}
-.btn-ghost{background:transparent;color:var(--text-dim);border:1px solid var(--card-border)}
-.btn-ghost:hover{color:var(--text);border-color:var(--accent)}
-.btn-danger{background:linear-gradient(135deg,var(--danger),#c2185b);color:#fff}
-.btn-sm{padding:8px 14px;font-size:12px}
-.btn svg{width:16px;height:16px}
-
-/* === Textarea / Input === */
-.input,.textarea{
-  width:100%;padding:12px 14px;
-  background:rgba(10,5,6,.6);
-  border:1px solid var(--card-border);border-radius:var(--r-md);
-  color:var(--text);font-size:13px;
-  font-family:'Vazirmatn',ui-monospace,monospace;
-  outline:none;transition:all var(--t);
-  resize:vertical;
-}
-.input:focus,.textarea:focus{
-  border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,87,34,.1);
-}
-.textarea{min-height:120px;line-height:1.7}
-.input::placeholder,.textarea::placeholder{color:var(--text-faint)}
-.label{display:block;font-size:12px;font-weight:700;color:var(--text-dim);margin-bottom:6px}
-
-/* === ادیتور تب‌ها === */
-.editor-tabs{
-  display:flex;gap:4px;background:rgba(10,5,6,.4);
-  padding:4px;border-radius:var(--r-md);margin-bottom:12px;
-}
-.editor-tab{
-  flex:1;padding:8px;border:none;background:none;
-  color:var(--text-dim);font-size:12px;font-weight:600;
-  border-radius:8px;cursor:pointer;
-  transition:all var(--t);font-family:inherit;
-}
-.editor-tab.active{background:var(--card-2);color:var(--text);box-shadow:0 0 0 1px var(--card-border)}
-
-/* === لیست deploy ها === */
-.deploy-list{display:flex;flex-direction:column;gap:10px}
-.deploy-item{
-  display:flex;align-items:center;gap:12px;
-  padding:12px;background:var(--card);
-  border:1px solid var(--card-border);border-radius:var(--r-md);
-  transition:all var(--t);cursor:pointer;
-}
-.deploy-item:hover{background:var(--card-2);border-color:var(--accent)}
-.deploy-thumb{
-  width:48px;height:48px;border-radius:8px;
-  background:linear-gradient(135deg,var(--fire-1),var(--fire-3));
-  display:grid;place-items:center;font-size:20px;flex-shrink:0;
-}
-.deploy-info{flex:1;min-width:0}
-.deploy-name{font-size:13px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.deploy-url{font-size:11px;color:var(--text-faint);font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:ltr}
-.deploy-actions{display:flex;gap:4px}
-.deploy-actions button{
-  width:32px;height:32px;border-radius:8px;border:none;
-  background:rgba(255,255,255,.05);color:var(--text-dim);
-  cursor:pointer;display:grid;place-items:center;
-  transition:all var(--t);
-}
-.deploy-actions button:hover{background:var(--card-2);color:var(--text)}
-.deploy-actions button svg{width:14px;height:14px}
-
-/* === آمار سریع === */
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.stat-card{
-  padding:14px;background:var(--card);
-  border:1px solid var(--card-border);border-radius:var(--r-md);
-  text-align:center;
-}
-.stat-num{font-size:24px;font-weight:900;background:linear-gradient(135deg,var(--fire-1),var(--fire-3));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;margin-bottom:4px}
-.stat-lbl{font-size:11px;color:var(--text-dim);font-weight:600}
-
-/* === Status Box === */
-.status-box{
-  margin-top:12px;padding:12px 14px;border-radius:var(--r-md);
-  font-size:13px;display:flex;align-items:flex-start;gap:10px;
-  line-height:1.6;animation:slideIn .3s ease-out;
-}
-@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.status-loading{background:rgba(255,152,0,.1);color:var(--accent-2);border:1px solid rgba(255,152,0,.2)}
-.status-error{background:rgba(255,23,68,.1);color:#ff6b85;border:1px solid rgba(255,23,68,.2)}
-.status-success{background:rgba(0,230,118,.1);color:var(--success);border:1px solid rgba(0,230,118,.2)}
+.loading{background:rgba(34,211,238,.1);color:#22d3ee;border:1px solid rgba(34,211,238,.2)}
+.error{background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.2)}
+.success{background:rgba(34,197,94,.1);color:#4ade80;border:1px solid rgba(34,197,94,.2)}
 .spinner{
-  width:16px;height:16px;border:2px solid currentColor;
+  width:14px;height:14px;border:2px solid currentColor;
   border-top-color:transparent;border-radius:50%;
-  animation:spin .8s linear infinite;flex-shrink:0;margin-top:2px;
+  animation:spin .8s linear infinite;flex-shrink:0;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
-.progress{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-top:8px}
-.progress-bar{height:100%;background:linear-gradient(90deg,var(--fire-1),var(--fire-3));border-radius:2px;transition:width .3s;box-shadow:0 0 8px var(--fire-2)}
-
-/* === Result Card === */
-.result-card{
-  background:linear-gradient(135deg,rgba(0,230,118,.08),rgba(0,230,118,.02));
-  border:1px solid rgba(0,230,118,.2);
-  border-radius:var(--r-md);padding:16px;margin-top:12px;
-  animation:popIn .4s cubic-bezier(.34,1.56,.64,1);
+.result{
+  margin-top:20px;padding:18px;
+  background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);
+  border-radius:12px;
 }
-@keyframes popIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
-.result-label{color:var(--success);font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.result-label{color:#4ade80;font-size:13px;font-weight:600;margin-bottom:10px}
 .link-box{
-  display:flex;align-items:center;gap:6px;
-  background:rgba(0,0,0,.4);border:1px solid var(--card-border);
+  display:flex;align-items:center;gap:8px;
+  background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);
   border-radius:10px;padding:4px;
 }
-.link-input{
-  flex:1;padding:8px 10px;background:none;border:none;outline:none;
-  color:var(--accent-3);font-family:monospace;font-size:12px;
+.link-box input{
+  flex:1;padding:8px 12px;background:none;border:none;outline:none;
+  color:#22d3ee;font-family:monospace;font-size:13px;
   direction:ltr;text-align:left;
 }
-.btn-icon{
-  width:36px;height:36px;border-radius:8px;border:none;
-  background:rgba(255,255,255,.05);color:var(--text);
-  cursor:pointer;display:grid;place-items:center;
-  transition:all var(--t);
+.copy-btn{
+  background:rgba(255,255,255,.06);border:none;color:#e8e8f0;
+  padding:8px 14px;border-radius:8px;cursor:pointer;
+  font-size:12px;font-weight:600;transition:all .25s;
 }
-.btn-icon:hover{background:var(--card-2)}
-.btn-icon.copied{background:var(--success);color:#0a1f12}
-.btn-icon svg{width:14px;height:14px}
-.qr-box{
-  display:flex;align-items:center;gap:12px;margin-top:12px;
-  padding:12px;background:rgba(0,0,0,.3);border-radius:10px;
-}
-.qr-img{width:80px;height:80px;background:#fff;border-radius:8px;padding:6px}
-.qr-img img{width:100%;height:100%}
-.qr-info{flex:1;font-size:11px;color:var(--text-dim);line-height:1.6}
-
-/* === Chat Bot === */
-.chat-container{display:flex;flex-direction:column;height:calc(100vh - 200px);height:calc(100dvh - 200px)}
-.chat-messages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
-.chat-messages::-webkit-scrollbar{width:4px}
-.chat-messages::-webkit-scrollbar-thumb{background:var(--card-border);border-radius:2px}
-.chat-msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.7;word-wrap:break-word;animation:msgIn .3s ease-out}
-@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.chat-msg.user{
-  align-self:flex-end;background:linear-gradient(135deg,var(--fire-1),var(--fire-2));
-  color:#fff;border-bottom-right-radius:4px;
-}
-.chat-msg.bot{
-  align-self:flex-start;background:var(--card-2);
-  border:1px solid var(--card-border);border-bottom-left-radius:4px;
-  white-space:pre-wrap;
-}
-.chat-msg.bot pre{
-  background:rgba(0,0,0,.4);padding:8px;border-radius:6px;
-  margin:6px 0;overflow-x:auto;direction:ltr;text-align:left;
-  font-size:11px;font-family:monospace;
-}
-.chat-msg.bot code{
-  background:rgba(0,0,0,.3);padding:2px 6px;border-radius:4px;
-  font-size:11px;font-family:monospace;direction:ltr;
-}
-.chat-input-bar{
-  display:flex;gap:8px;padding:12px;
-  background:rgba(10,5,6,.5);border-radius:var(--r-lg);
-  border:1px solid var(--card-border);
-}
-.chat-input{
-  flex:1;padding:10px 14px;background:rgba(10,5,6,.6);
-  border:1px solid var(--card-border);border-radius:var(--r-md);
-  color:var(--text);font-size:13px;font-family:inherit;
-  outline:none;transition:all var(--t);
-}
-.chat-input:focus{border-color:var(--accent)}
-.chat-send{
-  width:42px;height:42px;border-radius:var(--r-md);border:none;
-  background:linear-gradient(135deg,var(--fire-1),var(--fire-2));color:#fff;
-  cursor:pointer;display:grid;place-items:center;flex-shrink:0;
-  transition:all var(--t);
-}
-.chat-send:hover{transform:scale(1.05);box-shadow:0 0 16px rgba(255,87,34,.4)}
-.chat-send:disabled{opacity:.5;cursor:not-allowed}
-.chat-send svg{width:18px;height:18px}
-.chat-suggestions{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px 0}
-.chat-chip{
-  padding:6px 12px;background:var(--card);border:1px solid var(--card-border);
-  border-radius:16px;font-size:11px;color:var(--text-dim);
-  cursor:pointer;transition:all var(--t);font-family:inherit;
-}
-.chat-chip:hover{background:var(--card-2);color:var(--text);border-color:var(--accent)}
-.chat-tools{
-  display:flex;gap:4px;padding:4px 12px;
-  border-top:1px solid var(--card-border);
-}
-.chat-tool{
-  padding:4px 8px;background:none;border:none;
-  color:var(--text-faint);font-size:11px;cursor:pointer;
-  border-radius:6px;transition:all var(--t);font-family:inherit;
-  display:flex;align-items:center;gap:4px;
-}
-.chat-tool:hover{background:var(--card-2);color:var(--text)}
-.chat-tool svg{width:12px;height:12px}
-
-/* === Modal === */
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.8);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  display:none;align-items:center;justify-content:center;
-  z-index:100;padding:20px;animation:fadeIn .2s;
-}
-.modal-overlay.show{display:flex}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal{
-  width:100%;max-width:480px;max-height:85vh;overflow-y:auto;
-  background:linear-gradient(135deg,#1f1011,#14090a);
-  border:1px solid var(--card-border);border-radius:var(--r-lg);
-  padding:24px;animation:modalIn .3s cubic-bezier(.34,1.56,.64,1);
-  box-shadow:var(--shadow-deep);
-}
-@keyframes modalIn{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.modal-title{font-size:18px;font-weight:900;display:flex;align-items:center;gap:8px}
-.modal-close{
-  width:32px;height:32px;border-radius:8px;border:none;
-  background:var(--card);color:var(--text-dim);
-  cursor:pointer;display:grid;place-items:center;
-}
-.modal-close:hover{background:var(--card-2);color:var(--text)}
-
-/* === Empty State === */
-.empty{
-  text-align:center;padding:40px 20px;color:var(--text-faint);
-}
-.empty-icon{font-size:48px;margin-bottom:12px;opacity:.5}
-.empty-text{font-size:13px;line-height:1.7}
-
-/* === Divider === */
-.divider{height:1px;background:var(--card-border);margin:16px 0}
-
-/* === Toast === */
-.toast{
-  position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-100px);
-  background:linear-gradient(135deg,var(--fire-1),var(--fire-2));
-  color:#fff;padding:10px 20px;border-radius:24px;
-  font-size:13px;font-weight:700;z-index:200;
-  box-shadow:0 8px 24px rgba(0,0,0,.4);
-  transition:transform .4s cubic-bezier(.34,1.56,.64,1);
-  max-width:90%;
-}
-.toast.show{transform:translateX(-50%) translateY(0)}
-
-/* === Channel Card === */
-.channel-card{
-  display:flex;align-items:center;gap:12px;padding:14px;
-  background:linear-gradient(135deg,var(--card),var(--card-2));
-  border:1px solid var(--card-border);border-radius:var(--r-md);
-  text-decoration:none;color:inherit;
-  transition:all var(--t);cursor:pointer;
-}
-.channel-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,87,34,.2);border-color:var(--accent)}
-.channel-avatar{
-  width:48px;height:48px;border-radius:50%;
-  background:linear-gradient(135deg,var(--fire-1),var(--fire-3));
-  display:grid;place-items:center;
-  font-size:20px;font-weight:900;color:#fff;
-  box-shadow:0 0 16px rgba(255,87,34,.4);
-  flex-shrink:0;
-}
-.channel-info{flex:1;min-width:0}
-.channel-name{font-size:14px;font-weight:700;margin-bottom:2px}
-.channel-id{font-size:11px;color:var(--text-faint);font-family:monospace;direction:ltr;text-align:left}
-.channel-action{font-size:11px;color:var(--accent-3);font-weight:700;display:flex;align-items:center;gap:4px}
-.channel-action svg{width:12px;height:12px}
-
-/* === Features Grid === */
-.features-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;
-}
-.feature-card{
-  padding:16px;background:var(--card);
-  border:1px solid var(--card-border);border-radius:var(--r-md);
-  text-align:center;cursor:pointer;
-  transition:all var(--t);
-}
-.feature-card:hover{background:var(--card-2);transform:translateY(-2px);border-color:var(--accent)}
-.feature-icon{
-  width:44px;height:44px;margin:0 auto 8px;
-  background:linear-gradient(135deg,var(--fire-1),var(--fire-3));
-  border-radius:10px;display:grid;place-items:center;
-  font-size:22px;box-shadow:0 4px 12px rgba(255,87,34,.3);
-}
-.feature-name{font-size:12px;font-weight:700;margin-bottom:2px}
-.feature-desc{font-size:10px;color:var(--text-faint);line-height:1.5}
-
-/* === Responsive === */
-@media(min-width:768px){
-  .app-main{padding:30px;max-width:700px;margin:0 auto;width:100%}
-  .features-grid{grid-template-columns:repeat(4,1fr)}
-  .stats-grid{grid-template-columns:repeat(4,1fr)}
-  .hero h1{font-size:42px}
-  .chat-msg{max-width:70%}
-}
-@media(max-width:380px){
-  .app-header{padding:12px 14px}
-  .app-main{padding:14px;padding-bottom:90px}
-  .hero h1{font-size:26px}
-  .card{padding:16px}
-  .features-grid,.stats-grid{grid-template-columns:1fr 1fr}
-}
-
-/* === Pre Code === */
-pre{background:rgba(0,0,0,.4);padding:10px;border-radius:8px;overflow-x:auto;direction:ltr;text-align:left;font-family:monospace;font-size:12px;margin:6px 0}
-
-/* === Animations === */
-.fade-in{animation:fadeIn .4s ease-out}
-.shake{animation:shake .5s}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.copy-btn:hover{background:rgba(255,255,255,.12)}
+.copy-btn.copied{background:#22c55e;color:#052e16}
 </style>
 </head>
 <body>
-<div class="bg-fire"></div>
-<div class="bg-particles" id="particles"></div>
-
-<div class="app">
-  <!-- هدر -->
-  <header class="app-header">
-    <div class="brand">
-      <div class="brand-icon">🔥</div>
-      <div class="brand-text">
-        <div class="brand-name">TNT MOD....</div>
-        <div class="brand-sub">ساخت و دیپلوی صفحات وب</div>
-      </div>
-    </div>
-    <div class="header-actions">
-      <button class="icon-btn" onclick="showHealth()" title="بررسی سلامت">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-      </button>
-      <button class="icon-btn" onclick="showSettings()" title="تنظیمات">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      </button>
-    </div>
-  </header>
-
-  <!-- محتوا -->
-  <main class="app-main">
-    <!-- صفحه اصلی -->
-    <div id="page-home" class="page active">
-      <div class="hero">
-        <div class="hero-badge"><span class="dot"></span> سیستم آماده به کار</div>
-        <h1>اپلیکیشن TNT MOD....</h1>
-        <p>کدهای HTML، CSS و JavaScript خود را بنویسید، دیپلوی کنید و لینک عمومی دریافت کنید. همراه با چت‌بات هوش مصنوعی</p>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-num" id="statDeploys">۰</div>
-          <div class="stat-lbl">دیپلوی‌ها</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num" id="statTokens">۰</div>
-          <div class="stat-lbl">توکن‌ها</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-          دسترسی سریع
-        </div>
-        <div class="features-grid">
-          <div class="feature-card" onclick="goTab('deploy')">
-            <div class="feature-icon">🚀</div>
-            <div class="feature-name">دیپلوی</div>
-            <div class="feature-desc">ساخت و انتشار</div>
-          </div>
-          <div class="feature-card" onclick="goTab('editor')">
-            <div class="feature-icon">✏️</div>
-            <div class="feature-name">ادیتور</div>
-            <div class="feature-desc">کدنویسی</div>
-          </div>
-          <div class="feature-card" onclick="goTab('chat')">
-            <div class="feature-icon">🤖</div>
-            <div class="feature-name">چت‌بات</div>
-            <div class="feature-desc">هوش مصنوعی</div>
-          </div>
-          <div class="feature-card" onclick="goTab('projects')">
-            <div class="feature-icon">📦</div>
-            <div class="feature-name">پروژه‌ها</div>
-            <div class="feature-desc">دیپلوی‌های قبلی</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          ارتباط با سازنده
-        </div>
-        <a href="https://rubika.ir/ZODIAC_MAFIANIGHTS" target="_blank" class="channel-card">
-          <div class="channel-avatar">Z</div>
-          <div class="channel-info">
-            <div class="channel-name">چنل سازنده در روبیکا</div>
-            <div class="channel-id">@ZODIAC_MAFIANIGHTS</div>
-          </div>
-          <div class="channel-action">
-            عضویت
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!-- صفحه دیپلوی -->
-    <div id="page-deploy" class="page">
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          دیپلوی جدید
-        </div>
-        <div class="card-subtitle">کد HTML، CSS و JavaScript خود را وارد کنید. هر سه فایل با هم ترکیب و منتشر می‌شوند.</div>
-        
-        <div class="editor-tabs">
-          <button class="editor-tab active" data-lang="html" onclick="switchLang('html')">HTML</button>
-          <button class="editor-tab" data-lang="css" onclick="switchLang('css')">CSS</button>
-          <button class="editor-tab" data-lang="js" onclick="switchLang('js')">JavaScript</button>
-        </div>
-        
-        <textarea id="htmlCode" class="textarea" style="min-height:280px" placeholder="کد HTML خود را اینجا بنویسید...">&lt;!DOCTYPE html&gt;
-&lt;html lang="fa"&gt;
-&lt;head&gt;
-  &lt;meta charset="UTF-8"&gt;
-  &lt;title&gt;سلام دنیا&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;h1&gt;سلام دنیا!&lt;/h1&gt;
-  &lt;p&gt;این اولین صفحه من است 🚀&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</textarea>
-        
-        <textarea id="cssCode" class="textarea hidden" style="min-height:200px" placeholder="کد CSS خود را اینجا بنویسید...">body {
-  font-family: 'Vazirmatn', sans-serif;
-  background: linear-gradient(135deg, #ff5722, #ff9800);
-  color: white;
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
-  margin: 0;
-  text-align: center;
-}
-
-h1 {
-  font-size: 3rem;
-  margin: 0 0 10px;
-}</textarea>
-        
-        <textarea id="jsCode" class="textarea hidden" style="min-height:160px" placeholder="کد JavaScript خود را اینجا بنویسید...">console.log('سلام از TNT MOD!');
-
-// یک مثال ساده
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('صفحه آماده شد ✨');
-});</textarea>
-        
-        <div class="divider"></div>
-        
-        <label class="label">نام پروژه (اختیاری)</label>
-        <input type="text" id="projectName" class="input" placeholder="مثال: صفحه اصلی من">
-        
-        <div class="divider"></div>
-        
-        <button id="deployBtn" class="btn btn-primary" onclick="deploy()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-          <span>دیپلوی و دریافت لینک</span>
-        </button>
-        
-        <div id="deployStatus" class="hidden"></div>
-        <div id="deployResult" class="hidden"></div>
-      </div>
-    </div>
-
-    <!-- صفحه ادیتور / پیش‌نمایش -->
-    <div id="page-editor" class="page">
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          پیش‌نمایش زنده
-        </div>
-        <div class="card-subtitle">کد خود را بنویسید و نتیجه را همزمان ببینید</div>
-        
-        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-          <button class="btn btn-secondary btn-sm" onclick="loadSample()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            بارگذاری نمونه
-          </button>
-          <button class="btn btn-secondary btn-sm" onclick="refreshPreview()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-            تازه‌سازی
-          </button>
-          <button class="btn btn-secondary btn-sm" onclick="goTab('deploy')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-            دیپلوی
-          </button>
-        </div>
-        
-        <label class="label">خروجی HTML کامل (پیش‌نمایش)</label>
-        <div style="background:#000;border:1px solid var(--card-border);border-radius:var(--r-md);overflow:hidden;height:50vh;min-height:300px">
-          <iframe id="previewFrame" style="width:100%;height:100%;border:none;background:#fff"></iframe>
-        </div>
-        
-        <div class="divider"></div>
-        
-        <label class="label">پیش‌نمایش کد (فقط خواندنی)</label>
-        <textarea id="previewCode" class="textarea" readonly style="min-height:140px;font-size:11px"></textarea>
-      </div>
-    </div>
-
-    <!-- صفحه پروژه‌ها -->
-    <div id="page-projects" class="page">
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-          پروژه‌های من
-        </div>
-        <div id="projectsList" class="deploy-list"></div>
-        <div id="projectsEmpty" class="empty">
-          <div class="empty-icon">📦</div>
-          <div class="empty-text">هنوز پروژه‌ای دیپلوی نکرده‌اید.<br>از تب "دیپلوی" شروع کنید.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- صفحه چت‌بات -->
-    <div id="page-chat" class="page">
-      <div class="card" style="padding:0;overflow:hidden">
-        <div style="padding:16px;border-bottom:1px solid var(--card-border);display:flex;align-items:center;gap:10px">
-          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--fire-1),var(--fire-3));display:grid;place-items:center;font-size:18px">🤖</div>
-          <div style="flex:1">
-            <div style="font-size:14px;font-weight:700">دستیار هوشمند TNT</div>
-            <div style="font-size:11px;color:var(--success)">● آنلاین</div>
-          </div>
-          <button class="icon-btn" onclick="clearChat()" title="پاک کردن چت">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-          </button>
-        </div>
-        
-        <div class="chat-container">
-          <div class="chat-suggestions">
-            <button class="chat-chip" onclick="useSuggestion('یه صفحه لندینگ فارسی برای فروش قهوه بساز')">☕ لندینگ فروش قهوه</button>
-            <button class="chat-chip" onclick="useSuggestion('یه دکمه انیمیشنی نئونی با CSS بساز')">💡 دکمه نئونی</button>
-            <button class="chat-chip" onclick="useSuggestion('کد HTML یه بازی ساده حدس عدد بده')">🎮 بازی حدس عدد</button>
-            <button class="chat-chip" onclick="useSuggestion('یه کارت پروفایل حرفه‌ای بساز')">👤 کارت پروفایل</button>
-            <button class="chat-chip" onclick="useSuggestion('چطور از این اپ استفاده کنم؟')">❓ راهنما</button>
-          </div>
-          
-          <div id="chatMessages" class="chat-messages">
-            <div class="chat-msg bot">
-              سلام! 👋 من دستیار هوش مصنوعی TNT MOD هستم.
-              
-می‌تونم:
-• کد HTML/CSS/JS بسازم ✨
-• عکس‌ها رو ویرایش کنم 🎨
-• رنگ‌ها رو تغییر بدم 🎨
-• راهنماییت کنم 📚
-
-چطور می‌تونم کمکت کنم؟
-            </div>
-          </div>
-          
-          <div class="chat-tools">
-            <button class="chat-tool" onclick="document.getElementById('imageInput').click()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              ارسال عکس
-            </button>
-            <input type="file" id="imageInput" accept="image/*" hidden onchange="handleImageUpload(event)">
-            <button class="chat-tool" onclick="useSuggestion('یه پالت رنگی زیبا پیشنهاد بده')">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
-              پالت رنگ
-            </button>
-            <button class="chat-tool" onclick="useSuggestion('کد HTML برای من بساز')">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              کدنویسی
-            </button>
-          </div>
-          
-          <div class="chat-input-bar">
-            <input type="text" id="chatInput" class="chat-input" placeholder="پیام خود را بنویسید..." onkeydown="if(event.key==='Enter')sendChat()">
-            <button class="chat-send" onclick="sendChat()" id="chatSendBtn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- نوار پایین -->
-  <nav class="tab-bar">
-    <button class="tab active" data-tab="home" onclick="goTab('home')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-      خانه
-    </button>
-    <button class="tab" data-tab="deploy" onclick="goTab('deploy')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-      دیپلوی
-    </button>
-    <button class="tab" data-tab="editor" onclick="goTab('editor')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-      پیش‌نمایش
-    </button>
-    <button class="tab" data-tab="chat" onclick="goTab('chat')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      چت‌بات
-    </button>
-    <button class="tab" data-tab="projects" onclick="goTab('projects')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-      پروژه‌ها
-    </button>
-  </nav>
-</div>
-
-<!-- Modal: تنظیمات -->
-<div class="modal-overlay" id="settingsModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">⚙️ تنظیمات</div>
-      <button class="modal-close" onclick="closeModal('settingsModal')">✕</button>
-    </div>
-    
-    <div class="card" style="margin-bottom:0;padding:14px">
-      <div class="card-title" style="font-size:13px">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-        توکن‌های GitHub
-      </div>
-      <div id="tokensList"></div>
-      <button class="btn btn-secondary btn-sm" onclick="addNewToken()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        افزودن توکن جدید
-      </button>
-    </div>
-    
-    <div class="divider"></div>
-    
-    <button class="btn btn-ghost btn-sm" onclick="installApp()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      نصب اپ روی گوشی
-    </button>
-    <button class="btn btn-ghost btn-sm" onclick="exportData()" style="margin-top:8px">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      خروجی پروژه‌ها
-    </button>
+<div class="bg"></div>
+<div class="card">
+  <div class="header">
+    <div class="logo">🔥</div>
+    <h1>TNT MOD....</h1>
+    <p class="subtitle">کد HTML را وارد کن، لینک عمومی بگیر</p>
   </div>
-</div>
 
-<!-- Modal: سلامت -->
-<div class="modal-overlay" id="healthModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">🏥 بررسی سلامت سیستم</div>
-      <button class="modal-close" onclick="closeModal('healthModal')">✕</button>
-    </div>
-    <div id="healthContent">در حال بررسی...</div>
-  </div>
-</div>
+  <textarea id="htmlInput" placeholder="<!DOCTYPE html>&#10;<html>&#10;  <body>&#10;    <h1>سلام دنیا!</h1>&#10;  </body>&#10;</html>"></textarea>
 
-<!-- Modal: افزودن توکن -->
-<div class="modal-overlay" id="tokenModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">🔑 افزودن توکن GitHub</div>
-      <button class="modal-close" onclick="closeModal('tokenModal')">✕</button>
-    </div>
-    <label class="label">نام (مثلاً: اکانت اصلی)</label>
-    <input type="text" id="tokenName" class="input" placeholder="نام مستعار برای این توکن">
-    <div style="height:10px"></div>
-    <label class="label">توکن (ghp_xxx...)</label>
-    <input type="password" id="tokenValue" class="input" placeholder="ghp_xxxxxxxxxxxx">
-    <div style="height:14px"></div>
-    <div style="display:flex;gap:8px">
-      <button class="btn btn-ghost btn-sm" onclick="closeModal('tokenModal')">انصراف</button>
-      <button class="btn btn-primary btn-sm" onclick="saveToken()">ذخیره</button>
+  <button class="btn" id="deployBtn">🚀 دیپلوی و دریافت لینک</button>
+
+  <div id="status" class="status" style="display:none"></div>
+  <div id="result" class="result" style="display:none">
+    <div class="result-label">🎉 سایت شما منتشر شد!</div>
+    <div class="link-box">
+      <input type="text" id="liveLink" readonly>
+      <button class="copy-btn" id="copyBtn">کپی</button>
     </div>
   </div>
 </div>
-
-<!-- Toast -->
-<div id="toast" class="toast"></div>
 
 <script>
-// =====================================================================
-// TNT MOD.... | اپلیکیشن حرفه‌ای ساخت و دیپلوی صفحات وب
-// ساخته شده توسط: ZODIAC_MAFIANIGHTS @ rubika.ir
-// =====================================================================
+const OWNER = "s09383181-ship-it";
+const REPO  = "html-deploy";
+const BRANCH = "main";
 
-const REPO_OWNER = "s09383181-ship-it";
-const REPO_NAME  = "html-deploy";
-const BRANCH     = "main";
-const CHANNEL_URL = "https://rubika.ir/ZODIAC_MAFIANIGHTS";
+// توکن GitHub - اینجا بذار یا از کاربر بگیر
+let TOKEN = localStorage.getItem("tnt_gh_token") || "";
 
-// =====================================================================
-// ==================== STATE & STORAGE ================================
-// =====================================================================
-const STORAGE = {
-  tokens: 'tnt_tokens_v1',
-  currentToken: 'tnt_current_token_v1',
-  projects: 'tnt_projects_v1',
-  chatHistory: 'tnt_chat_v1',
-  settings: 'tnt_settings_v1'
-};
-
-let state = {
-  currentLang: 'html',
-  currentTab: 'home',
-  tokens: [],
-  currentTokenId: null,
-  projects: [],
-  chatHistory: [],
-  deployInProgress: false,
-  chatInProgress: false
-};
-
-function loadState() {
-  try {
-    state.tokens = JSON.parse(localStorage.getItem(STORAGE.tokens) || '[]');
-    state.currentTokenId = localStorage.getItem(STORAGE.currentToken);
-    state.projects = JSON.parse(localStorage.getItem(STORAGE.projects) || '[]');
-    state.chatHistory = JSON.parse(localStorage.getItem(STORAGE.chatHistory) || '[]');
-  } catch (e) { console.error('Load state error:', e); }
-}
-
-function saveTokens() { localStorage.setItem(STORAGE.tokens, JSON.stringify(state.tokens)); }
-function saveCurrentToken() { localStorage.setItem(STORAGE.currentToken, state.currentTokenId || ''); }
-function saveProjects() { localStorage.setItem(STORAGE.projects, JSON.stringify(state.projects)); }
-function saveChatHistory() { 
-  // فقط ۵۰ پیام آخر نگه دار
-  const trimmed = state.chatHistory.slice(-50);
-  localStorage.setItem(STORAGE.chatHistory, JSON.stringify(trimmed));
-}
-
-function getCurrentToken() {
-  return state.tokens.find(t => t.id === state.currentTokenId) || state.tokens[0] || null;
-}
-
-// =====================================================================
-// ==================== UI HELPERS ======================================
-// =====================================================================
-function $(id) { return document.getElementById(id); }
-
-function showToast(msg, type = 'success') {
-  const t = $('toast');
-  t.textContent = msg;
-  t.className = 'toast show';
-  if (type === 'error') t.style.background = 'linear-gradient(135deg, #ff1744, #c2185b)';
-  else if (type === 'warn') t.style.background = 'linear-gradient(135deg, #ffc107, #ff9800)';
-  else t.style.background = 'linear-gradient(135deg, var(--fire-1), var(--fire-2))';
-  clearTimeout(t._timeout);
-  t._timeout = setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-function openModal(id) { $(id).classList.add('show'); }
-function closeModal(id) { $(id).classList.remove('show'); }
-
-function goTab(name) {
-  state.currentTab = name;
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  $('page-' + name).classList.add('active');
-  document.querySelector(`.tab[data-tab="${name}"]`).classList.add('active');
-  $('app-main').scrollTop = 0;
-  if (name === 'editor') refreshPreview();
-  if (name === 'projects') renderProjects();
-  if (name === 'home') updateStats();
-}
-
-function switchLang(lang) {
-  state.currentLang = lang;
-  document.querySelectorAll('.editor-tab').forEach(t => t.classList.toggle('active', t.dataset.lang === lang));
-  $('htmlCode').classList.toggle('hidden', lang !== 'html');
-  $('cssCode').classList.toggle('hidden', lang !== 'css');
-  $('jsCode').classList.toggle('hidden', lang !== 'js');
-}
-
-function updateStats() {
-  $('statDeploys').textContent = toFa(state.projects.length);
-  $('statTokens').textContent = toFa(state.tokens.length);
-}
-
-function toFa(num) {
-  const fa = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
-  return String(num).replace(/\d/g, d => fa[d]);
-}
+const $ = id => document.getElementById(id);
 
 function rand() {
-  return Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4);
+  return Math.random().toString(36).slice(2,8) + Date.now().toString(36).slice(-4);
 }
 
-// =====================================================================
-// ==================== PARTICLES =======================================
-// =====================================================================
-function initParticles() {
-  const container = $('particles');
-  for (let i = 0; i < 25; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.animationDelay = Math.random() * 8 + 's';
-    p.style.animationDuration = (6 + Math.random() * 6) + 's';
-    container.appendChild(p);
-  }
+function toFa(n) {
+  return String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
 }
 
-// =====================================================================
-// ==================== GITHUB API ======================================
-// =====================================================================
-async function githubAPI(path, opts = {}) {
-  const token = getCurrentToken();
-  if (!token) throw new Error('توکنی انتخاب نشده');
-  const res = await fetch('https://api.github.com' + path, {
-    ...opts,
-    headers: {
-      'Authorization': 'token ' + token.value,
-      'Accept': 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-      ...(opts.headers || {})
-    }
-  });
-  if (!res.ok) {
-    let msg = '';
-    try { msg = (await res.json()).message || ''; } catch(e) { msg = await res.text().catch(()=>''); }
-    throw new Error('خطای ' + toFa(res.status) + ': ' + (msg || res.statusText));
-  }
-  return res.json();
+function showStatus(type, text) {
+  const s = $("status");
+  s.className = "status " + type;
+  s.style.display = "flex";
+  s.innerHTML = (type === "loading" ? '<div class="spinner"></div>' : "") + "<span>" + text + "</span>";
 }
 
-async function validateToken(token) {
-  const res = await fetch('https://api.github.com/user', {
-    headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github+json' }
-  });
-  if (!res.ok) throw new Error('توکن نامعتبر');
-  return res.json();
-}
+function hideStatus() { $("status").style.display = "none"; }
 
-async function getTokenExpiry(token) {
-  // بررسی scopes و تاریخ انقضا (از هدر x-oauth-scopes)
+async function askToken() {
+  if (TOKEN) return TOKEN;
+  const t = prompt("توکن GitHub را وارد کن (ghp_xxx...):");
+  if (!t) return null;
+  // تست
   try {
-    const res = await fetch('https://api.github.com/user', {
-      headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github+json' }
-    });
-    const scopes = res.headers.get('x-oauth-scopes') || '';
-    // تاریخ انقضا در PAT از طریق API قابل بررسی نیست مستقیم
-    // ولی می‌تونیم از طریق ساخت تست request چک کنیم
-    return { scopes, valid: res.ok };
+    const r = await fetch("https://api.github.com/user", {headers: {Authorization: "token " + t}});
+    if (!r.ok) throw new Error("نامعتبر");
+    TOKEN = t;
+    localStorage.setItem("tnt_gh_token", t);
+    return t;
   } catch (e) {
-    return { scopes: '', valid: false };
+    alert("توکن نامعتبر است");
+    return null;
   }
-}
-
-// =====================================================================
-// ==================== TOKEN MANAGEMENT ================================
-// =====================================================================
-function renderTokens() {
-  const list = $('tokensList');
-  if (state.tokens.length === 0) {
-    list.innerHTML = '<div class="empty" style="padding:20px"><div class="empty-icon">🔑</div><div class="empty-text">هیچ توکنی ذخیره نشده</div></div>';
-    return;
-  }
-  list.innerHTML = state.tokens.map(t => {
-    const isCurrent = t.id === state.currentTokenId;
-    const expiryText = t.expiry ? formatDate(t.expiry) : 'نامشخص';
-    const isExpired = t.expiry && new Date(t.expiry) < new Date();
-    return `
-      <div class="deploy-item" style="${isCurrent ? 'border-color:var(--accent);background:var(--card-2)' : ''}">
-        <div class="deploy-thumb" style="background:${isCurrent ? 'linear-gradient(135deg,var(--fire-1),var(--fire-3))' : 'var(--card)'}">
-          ${isCurrent ? '✓' : '🔑'}
-        </div>
-        <div class="deploy-info">
-          <div class="deploy-name">${escapeHtml(t.name)} ${t.username ? '@' + t.username : ''}</div>
-          <div class="deploy-url" style="color:${isExpired ? 'var(--danger)' : 'var(--text-faint)'}">
-            ${isExpired ? '⚠️ منقضی شده' : 'انقضا: ' + expiryText}
-          </div>
-        </div>
-        <div class="deploy-actions">
-          ${!isCurrent ? `<button onclick="selectToken('${t.id}')" title="انتخاب">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-          </button>` : ''}
-          <button onclick="deleteToken('${t.id}')" title="حذف">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
-          </button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function formatDate(iso) {
-  if (!iso) return 'نامشخص';
-  const d = new Date(iso);
-  const now = new Date();
-  const diff = Math.floor((d - now) / (1000 * 60 * 60 * 24));
-  return toFa(d.getFullYear() + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + String(d.getDate()).padStart(2,'0')) + 
-    (diff >= 0 ? ` (${toFa(diff)} روز)` : ' (منقضی)');
-}
-
-function addNewToken() {
-  $('tokenName').value = '';
-  $('tokenValue').value = '';
-  openModal('tokenModal');
-}
-
-async function saveToken() {
-  const name = $('tokenName').value.trim() || 'توکن ' + toFa(state.tokens.length + 1);
-  const value = $('tokenValue').value.trim();
-  if (!value) { showToast('لطفاً توکن را وارد کنید', 'error'); return; }
-  
-  try {
-    showToast('در حال اعتبارسنجی...', 'warn');
-    const user = await validateToken(value);
-    const expiry = await guessTokenExpiry(value);
-    const token = {
-      id: 't' + Date.now(),
-      name,
-      value,
-      username: user.login,
-      avatar: user.avatar_url,
-      created: new Date().toISOString(),
-      expiry,
-      lastUsed: new Date().toISOString()
-    };
-    state.tokens.push(token);
-    if (!state.currentTokenId) state.currentTokenId = token.id;
-    saveTokens();
-    saveCurrentToken();
-    closeModal('tokenModal');
-    renderTokens();
-    updateStats();
-    showToast('توکن ذخیره شد ✓');
-  } catch (e) {
-    showToast('خطا: ' + e.message, 'error');
-  }
-}
-
-async function guessTokenExpiry(token) {
-  // تاریخ انقضای دقیق از API در دسترس نیست
-  // ولی می‌تونیم یه تست request بزنیم
-  // برای PAT های classic، معمولاً 30 روزه یا no expiration هست
-  // ما یه تاریخ پیش‌فرض 30 روز بعد میذاریم که کاربر بتونه ویرایش کنه
-  return new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
-}
-
-function selectToken(id) {
-  state.currentTokenId = id;
-  const t = getCurrentToken();
-  if (t) t.lastUsed = new Date().toISOString();
-  saveTokens();
-  saveCurrentToken();
-  renderTokens();
-  showToast('توکن تغییر کرد ✓');
-}
-
-function deleteToken(id) {
-  if (!confirm('این توکن حذف شود؟')) return;
-  state.tokens = state.tokens.filter(t => t.id !== id);
-  if (state.currentTokenId === id) state.currentTokenId = state.tokens[0]?.id || null;
-  saveTokens();
-  saveCurrentToken();
-  renderTokens();
-  updateStats();
-  showToast('توکن حذف شد');
-}
-
-function showSettings() {
-  renderTokens();
-  openModal('settingsModal');
-}
-
-// =====================================================================
-// ==================== DEPLOY ==========================================
-// =====================================================================
-function combineCode() {
-  const html = $('htmlCode').value;
-  const css = $('cssCode').value;
-  const js = $('jsCode').value;
-  
-  // اگه HTML کامل باشه (DOCTYPE داره)، CSS و JS رو inject کن
-  if (/<!DOCTYPE|<html/i.test(html)) {
-    let result = html;
-    // inject CSS
-    if (css.trim()) {
-      if (result.includes('</head>')) {
-        result = result.replace('</head>', `<style>\n${css}\n</style>\n</head>`);
-      } else {
-        result = `<style>\n${css}\n</style>\n` + result;
-      }
-    }
-    // inject JS
-    if (js.trim()) {
-      if (result.includes('</body>')) {
-        result = result.replace('</body>', `<script>\n${js}\n</script>\n</body>`);
-      } else {
-        result = result + `\n<script>\n${js}\n</script>`;
-      }
-    }
-    return result;
-  } else {
-    // HTML ناقصه → یه صفحه کامل بساز
-    return `<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ساخته شده با TNT MOD</title>
-${css ? `<style>\n${css}\n</style>` : ''}
-</head>
-<body>
-${html}
-${js ? `<script>\n${js}\n</script>` : ''}
-</body>
-</html>`;
-  }
-}
-
-async function waitUntilLive(url, maxWaitMs = 90000) {
-  const start = Date.now();
-  let attempt = 0;
-  while (Date.now() - start < maxWaitMs) {
-    attempt++;
-    const elapsed = Math.floor((Date.now() - start) / 1000);
-    const statusEl = $('deployStatus');
-    statusEl.className = 'status-box status-loading';
-    statusEl.innerHTML = `
-      <div class="spinner"></div>
-      <div style="flex:1">
-        <b>مرحله ۲ از ۲:</b> در حال منتظر شدن لینک (تلاش ${toFa(attempt)} - ${toFa(elapsed)} ثانیه)
-        <div class="progress"><div class="progress-bar" style="width:${Math.min(95, (elapsed/60)*100)}%"></div></div>
-      </div>
-    `;
-    try {
-      const res = await fetch(url, { method: 'GET', cache: 'no-store' });
-      if (res.ok) {
-        const text = await res.text();
-        if (text.length > 50 && !text.includes('404')) return true;
-      }
-    } catch (e) {}
-    await new Promise(r => setTimeout(r, 3000));
-  }
-  return false;
 }
 
 async function deploy() {
-  if (state.deployInProgress) return;
-  
-  const token = getCurrentToken();
-  if (!token) {
-    showToast('لطفاً ابتدا یک توکن اضافه کنید', 'error');
-    showSettings();
+  const html = $("htmlInput").value.trim();
+  if (!html) {
+    showStatus("error", "⚠️ لطفاً کد HTML را وارد کن");
     return;
   }
-  
-  const fullHTML = combineCode();
-  if (!fullHTML.trim()) {
-    showToast('کدی برای دیپلوی وجود ندارد', 'error');
-    return;
-  }
-  
-  const projectName = $('projectName').value.trim() || 'پروژه ' + toFa(state.projects.length + 1);
-  
-  state.deployInProgress = true;
-  $('deployBtn').disabled = true;
-  $('deployResult').classList.add('hidden');
-  
-  const statusEl = $('deployStatus');
-  statusEl.classList.remove('hidden');
-  statusEl.className = 'status-box status-loading';
-  statusEl.innerHTML = '<div class="spinner"></div><div style="flex:1"><b>مرحله ۱ از ۲:</b> در حال آپلود به GitHub...</div>';
-  
+  const token = await askToken();
+  if (!token) return;
+
+  const btn = $("deployBtn");
+  btn.disabled = true;
+  $("result").style.display = "none";
+  showStatus("loading", "در حال آپلود به GitHub...");
+
   try {
     const id = rand();
     const path = `sites/${id}/index.html`;
-    const contentB64 = btoa(unescape(encodeURIComponent(fullHTML)));
-    
-    await githubAPI(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        message: `deploy: ${projectName}`,
-        content: contentB64,
-        branch: BRANCH
-      })
+    const content = btoa(unescape(encodeURIComponent(html)));
+
+    const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`, {
+      method: "PUT",
+      headers: {
+        Authorization: "token " + token,
+        "Content-Type": "application/json",
+        Accept: "application/vnd.github+json"
+      },
+      body: JSON.stringify({message: "deploy " + id, content, branch: BRANCH})
     });
-    
-    const liveUrl = `https://${REPO_OWNER}.github.io/${REPO_NAME}/sites/${id}/`;
-    
-    const ok = await waitUntilLive(liveUrl, 90000);
-    
-    const project = {
-      id,
-      name: projectName,
-      url: liveUrl,
-      created: new Date().toISOString(),
-      size: new Blob([fullHTML]).size,
-      html: fullHTML
-    };
-    state.projects.unshift(project);
-    if (state.projects.length > 100) state.projects = state.projects.slice(0, 100);
-    saveProjects();
-    updateStats();
-    
-    if (ok) {
-      statusEl.className = 'status-box status-success';
-      statusEl.innerHTML = '✅ لینک آماده استفاده است!';
-      showResult(liveUrl, project);
-    } else {
-      statusEl.className = 'status-box status-error';
-      statusEl.innerHTML = `⏰ لینک آپلود شد ولی GitHub Pages کمی طول می‌کشد. لینک در ۱-۲ دقیقه فعال می‌شود.`;
-      showResult(liveUrl, project);
+
+    if (!r.ok) {
+      const e = await r.json().catch(() => ({}));
+      throw new Error(e.message || "خطای " + r.status);
+    }
+
+    const url = `https://${OWNER}.github.io/${REPO}/sites/${id}/`;
+
+    // منتظر بمون تا GitHub Pages لینک رو سرو کنه
+    showStatus("loading", "منتظر فعال شدن لینک...");
+    let ok = false;
+    for (let i = 0; i < 30; i++) {
+      await new Promise(r => setTimeout(r, 3000));
+      try {
+        const c = await fetch(url, {cache: "no-store"});
+        if (c.ok) { ok = true; break; }
+      } catch (e) {}
+      showStatus("loading", `منتظر فعال شدن لینک... (${toFa(i+1)}/۳۰)`);
+    }
+
+    hideStatus();
+    $("liveLink").value = url;
+    $("result").style.display = "block";
+    if (!ok) {
+      showStatus("success", "✅ آپلود شد. لینک تا ۱ دقیقه دیگر فعال می‌شود.");
     }
   } catch (e) {
-    statusEl.className = 'status-box status-error';
-    statusEl.innerHTML = '❌ ' + e.message;
-    if (e.message.includes('Bad credentials') || e.message.includes('401')) {
-      statusEl.innerHTML += '<br>💡 توکن نامعتبر است. لطفاً یک توکن جدید اضافه کنید.';
-    }
+    showStatus("error", "❌ " + e.message);
   } finally {
-    state.deployInProgress = false;
-    $('deployBtn').disabled = false;
+    btn.disabled = false;
   }
 }
 
-function showResult(url, project) {
-  const result = $('deployResult');
-  result.classList.remove('hidden');
-  result.innerHTML = `
-    <div class="result-card">
-      <div class="result-label">🎉 سایت شما منتشر شد!</div>
-      <div class="link-box">
-        <input type="text" class="link-input" value="${url}" readonly>
-        <button class="btn-icon" onclick="openLink('${url}')" title="باز کردن">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </button>
-        <button class="btn-icon" onclick="copyText('${url}')" title="کپی">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-        <button class="btn-icon" onclick="shareLink('${url}')" title="اشتراک‌گذاری">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        </button>
-      </div>
-      <div class="qr-box">
-        <div class="qr-img">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&bgcolor=ffffff&color=000000&data=${encodeURIComponent(url)}" alt="QR Code">
-        </div>
-        <div class="qr-info">
-          📱 این QR Code رو اسکن کن<br>
-          یا لینک رو کپی و به دوستانت بفرست<br>
-          <span style="color:var(--accent-3)">سایز: ${toFa(Math.round(project.size/1024))} کیلوبایت</span>
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-        <button class="btn btn-secondary btn-sm" onclick="downloadQR('${url}')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          دانلود QR
-        </button>
-        <button class="btn btn-secondary btn-sm" onclick="copyEmbed('${url}')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          کد Embed
-        </button>
-      </div>
-    </div>
-  `;
-}
-
-function openLink(url) { window.open(url, '_blank'); }
-async function copyText(text) {
+$("deployBtn").addEventListener("click", deploy);
+$("copyBtn").addEventListener("click", async () => {
+  const url = $("liveLink").value;
+  if (!url) return;
   try {
-    await navigator.clipboard.writeText(text);
-    showToast('کپی شد ✓');
+    await navigator.clipboard.writeText(url);
+    const b = $("copyBtn");
+    b.textContent = "کپی شد ✓";
+    b.classList.add("copied");
+    setTimeout(() => { b.textContent = "کپی"; b.classList.remove("copied"); }, 1500);
   } catch (e) {
-    prompt('کپی کنید:', text);
+    prompt("کپی کن:", url);
   }
-}
-async function shareLink(url) {
-  if (navigator.share) {
-    try {
-      await navigator.share({ title: 'سایت من', url });
-    } catch (e) {}
-  } else {
-    copyText(url);
-  }
-}
-function downloadQR(url) {
-  const a = document.createElement('a');
-  a.href = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&bgcolor=ffffff&color=000000&data=${encodeURIComponent(url)}`;
-  a.download = 'qr-code.png';
-  a.target = '_blank';
-  a.click();
-}
-function copyEmbed(url) {
-  const embed = `<iframe src="${url}" width="100%" height="600" frameborder="0"></iframe>`;
-  copyText(embed);
-  showToast('کد Embed کپی شد');
-}
-
-// =====================================================================
-// ==================== PROJECTS LIST ===================================
-// =====================================================================
-function renderProjects() {
-  const list = $('projectsList');
-  const empty = $('projectsEmpty');
-  if (state.projects.length === 0) {
-    list.innerHTML = '';
-    empty.classList.remove('hidden');
-    return;
-  }
-  empty.classList.add('hidden');
-  list.innerHTML = state.projects.map(p => `
-    <div class="deploy-item">
-      <div class="deploy-thumb">🚀</div>
-      <div class="deploy-info">
-        <div class="deploy-name">${escapeHtml(p.name)}</div>
-        <div class="deploy-url">${p.url}</div>
-      </div>
-      <div class="deploy-actions">
-        <button onclick="openLink('${p.url}')" title="باز کردن">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </button>
-        <button onclick="copyText('${p.url}')" title="کپی">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-        <button onclick="loadProject('${p.id}')" title="بارگذاری در ادیتور">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        </button>
-        <button onclick="deleteProject('${p.id}')" title="حذف">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
-        </button>
-      </div>
-    </div>
-  `).join('');
-}
-
-function loadProject(id) {
-  const p = state.projects.find(x => x.id === id);
-  if (!p) return;
-  // تجزیه HTML به سه بخش
-  const html = p.html;
-  const styleMatch = html.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
-  const scriptMatch = html.match(/<script[^>]*>([\s\S]*?)<\/script>/i);
-  
-  if (styleMatch) {
-    $('cssCode').value = styleMatch[1].trim();
-    $('htmlCode').value = html.replace(styleMatch[0], '').replace(scriptMatch ? scriptMatch[0] : '', '').trim();
-  } else {
-    $('htmlCode').value = html;
-  }
-  if (scriptMatch) $('jsCode').value = scriptMatch[1].trim();
-  
-  $('projectName').value = p.name + ' (کپی)';
-  goTab('deploy');
-  showToast('پروژه بارگذاری شد');
-}
-
-function deleteProject(id) {
-  if (!confirm('این پروژه از لیست حذف شود؟ (خود فایل روی GitHub باقی می‌ماند)')) return;
-  state.projects = state.projects.filter(p => p.id !== id);
-  saveProjects();
-  renderProjects();
-  updateStats();
-  showToast('پروژه حذف شد');
-}
-
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
-}
-
-// =====================================================================
-// ==================== PREVIEW / EDITOR ================================
-// =====================================================================
-function refreshPreview() {
-  const fullHTML = combineCode();
-  const frame = $('previewFrame');
-  // استفاده از srcdoc برای امنیت بیشتر
-  frame.srcdoc = fullHTML;
-  $('previewCode').value = fullHTML;
-}
-
-function loadSample() {
-  $('htmlCode').value = `<div class="container">
-  <h1>سلام دنیا! 🚀</h1>
-  <p>این یک صفحه نمونه است که با <b>TNT MOD</b> ساخته شده.</p>
-  <button onclick="alert('دکمه کلیک شد!')">کلیک کن</button>
-</div>`;
-  $('cssCode').value = `body {
-  margin: 0;
-  font-family: 'Vazirmatn', sans-serif;
-  background: linear-gradient(135deg, #ff5722, #ff9800);
-  color: white;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-}
-
-.container {
-  text-align: center;
-  padding: 40px;
-  background: rgba(0,0,0,0.2);
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-}
-
-h1 {
-  font-size: 3rem;
-  margin: 0 0 10px;
-}
-
-button {
-  background: white;
-  color: #ff5722;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: transform 0.2s;
-}
-
-button:hover {
-  transform: scale(1.05);
-}`;
-  $('jsCode').value = `console.log('خوش اومدی به TNT MOD!');
-
-// شمارنده بازدید
-let visits = localStorage.getItem('visits') || 0;
-visits++;
-localStorage.setItem('visits', visits);
-console.log('بازدیدهای شما: ' + visits);`;
-  refreshPreview();
-  showToast('نمونه بارگذاری شد');
-}
-
-// به‌روزرسانی خودکار پیش‌نمایش
-['htmlCode', 'cssCode', 'jsCode'].forEach(id => {
-  $(id).addEventListener('input', () => {
-    if (state.currentTab === 'editor') refreshPreview();
-  });
 });
 
-// =====================================================================
-// ==================== CHAT BOT (AI) ===================================
-// =====================================================================
-// استفاده از API رایگان pollinations.ai (بدون نیاز به کلید)
-
-const CHAT_SYSTEM_PROMPT = `تو "TNT" هستی، یک دستیار هوش مصنوعی حرفه‌ای در اپلیکیشن "TNT MOD" که برای ساخت و دیپلوی صفحات وب طراحی شده.
-
-قابلیت‌های تو:
-1. ساخت کد HTML, CSS, JavaScript با کیفیت بالا
-2. ویرایش و بهبود کد
-3. پیشنهاد رنگ و طراحی
-4. راهنمایی استفاده از اپ
-5. پاسخ به سوالات عمومی
-
-قوانین:
-- همیشه به فارسی پاسخ بده
-- وقتی کد می‌سازی، آن را در بلوک کد با ```html ``` بگذار
-- کدها باید کامل و قابل اجرا باشند
-- از emoji مناسب استفاده کن
-- پاسخ‌هایت مختصر ولی کامل باش
-- اگر کاربر درخواست عکس کرد، بگو "متأسفانه نمی‌توانم عکس تولید کنم" ولی رنگ یا طرح پیشنهاد بده
-- در پایان هر پاسخ، اگر مرتبط است، یک دکمه "کپی کد" یا "استفاده" پیشنهاد بده
-
-سازنده: ZODIAC_MAFIANIGHTS @ rubika.ir`;
-
-async function sendChat() {
-  const input = $('chatInput');
-  const msg = input.value.trim();
-  if (!msg || state.chatInProgress) return;
-  
-  addChatMessage('user', msg);
-  input.value = '';
-  state.chatInProgress = true;
-  $('chatSendBtn').disabled = true;
-  
-  // نمایش پیام "در حال تایپ"
-  const typingId = 'typing-' + Date.now();
-  const typingEl = document.createElement('div');
-  typingEl.className = 'chat-msg bot';
-  typingEl.id = typingId;
-  typingEl.innerHTML = '<div class="spinner"></div> در حال فکر کردن...';
-  $('chatMessages').appendChild(typingEl);
-  $('chatMessages').scrollTop = $('chatMessages').scrollHeight;
-  
-  try {
-    const response = await callAI(msg);
-    typingEl.remove();
-    addChatMessage('bot', response);
-  } catch (e) {
-    typingEl.remove();
-    addChatMessage('bot', '❌ خطا: ' + e.message + '\n\nلطفاً دوباره تلاش کنید.');
-  } finally {
-    state.chatInProgress = false;
-    $('chatSendBtn').disabled = false;
-  }
-}
-
-async function callAI(userMessage) {
-  // استفاده از pollinations.ai (رایگان، بدون کلید)
-  const messages = [
-    { role: 'system', content: CHAT_SYSTEM_PROMPT },
-    ...state.chatHistory.slice(-10).map(m => ({ role: m.role, content: m.content })),
-    { role: 'user', content: userMessage }
-  ];
-  
-  const res = await fetch('https://text.pollinations.ai/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      messages,
-      model: 'openai-fast',
-      private: true
-    })
-  });
-  
-  if (!res.ok) throw new Error('خطا در ارتباط با سرور');
-  const text = await res.text();
-  
-  // ذخیره در تاریخچه
-  state.chatHistory.push({ role: 'user', content: userMessage });
-  state.chatHistory.push({ role: 'assistant', content: text });
-  saveChatHistory();
-  
-  return text;
-}
-
-function addChatMessage(role, content) {
-  const div = document.createElement('div');
-  div.className = 'chat-msg ' + role;
-  div.innerHTML = formatChatContent(content);
-  $('chatMessages').appendChild(div);
-  $('chatMessages').scrollTop = $('chatMessages').scrollHeight;
-  
-  // اگر کد HTML داره، دکمه استفاده اضافه کن
-  if (role === 'bot' && content.includes('```html')) {
-    const codeMatch = content.match(/```html\n([\s\S]*?)\n```/);
-    if (codeMatch) {
-      const btn = document.createElement('button');
-      btn.className = 'btn btn-primary btn-sm';
-      btn.style.marginTop = '8px';
-      btn.style.fontSize = '11px';
-      btn.innerHTML = '🚀 استفاده در دیپلوی';
-      btn.onclick = () => {
-        $('htmlCode').value = codeMatch[1].trim();
-        goTab('deploy');
-        showToast('کد در دیپلوی بارگذاری شد');
-      };
-      div.appendChild(btn);
-    }
-  }
-}
-
-function formatChatContent(text) {
-  // تبدیل markdown به HTML
-  let html = escapeHtml(text);
-  // code blocks
-  html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
-  // inline code
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-  // bold
-  html = html.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
-  // line breaks
-  html = html.replace(/\n/g, '<br>');
-  return html;
-}
-
-function clearChat() {
-  if (!confirm('تاریخچه چت پاک شود؟')) return;
-  state.chatHistory = [];
-  saveChatHistory();
-  $('chatMessages').innerHTML = `
-    <div class="chat-msg bot">
-      سلام! 👋 من دستیار هوش مصنوعی TNT MOD هستم.
-      
-می‌تونم:
-• کد HTML/CSS/JS بسازم ✨
-• عکس‌ها رو ویرایش کنم 🎨
-• رنگ‌ها رو تغییر بدم 🎨
-• راهنماییت کنم 📚
-
-چطور می‌تونم کمکت کنم؟
-    </div>
-  `;
-}
-
-function useSuggestion(text) {
-  $('chatInput').value = text;
-  sendChat();
-}
-
-function handleImageUpload(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  // تبدیل به base64
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    addChatMessage('user', `📷 [عکس: ${file.name}]`);
-    addChatMessage('bot', `عکس شما رو دیدم! 📸\n\nمتأسفانه من نمی‌تونم عکس رو پردازش کنم، ولی می‌تونم:\n\n• کد HTML برای نمایش این عکس بسازم\n• یه گالری عکس با استایل زیبا طراحی کنم\n• یه افکت CSS روی عکس پیشنهاد بدم\n\nکدوم رو می‌خوای؟ یا اگه می‌خوای کد embed عکس تو HTML بسازم، بگو!`);
-  };
-  reader.readAsDataURL(file);
-  event.target.value = '';
-}
-
-// =====================================================================
-// ==================== HEALTH CHECK (Self-Healing) =====================
-// =====================================================================
-async function showHealth() {
-  openModal('healthModal');
-  const content = $('healthContent');
-  content.innerHTML = '<div class="spinner" style="margin:20px auto"></div><p style="text-align:center">در حال بررسی...</p>';
-  
-  const checks = [];
-  
-  // 1. اتصال اینترنت
-  try {
-    const res = await fetch('https://api.github.com/zen', { method: 'GET' });
-    checks.push({ name: '🌐 اتصال اینترنت', status: res.ok, msg: res.ok ? 'اتصال برقرار است' : 'مشکل در اتصال' });
-  } catch (e) {
-    checks.push({ name: '🌐 اتصال اینترنت', status: false, msg: 'عدم اتصال به اینترنت' });
-  }
-  
-  // 2. توکن GitHub
-  const token = getCurrentToken();
-  if (token) {
-    try {
-      const user = await validateToken(token.value);
-      checks.push({ name: '🔑 توکن GitHub', status: true, msg: `معتبر - @${user.login}` });
-    } catch (e) {
-      checks.push({ name: '🔑 توکن GitHub', status: false, msg: 'نامعتبر - توکن جدید وارد کنید' });
-    }
-  } else {
-    checks.push({ name: '🔑 توکن GitHub', status: false, msg: 'تنظیم نشده' });
-  }
-  
-  // 3. GitHub Pages
-  try {
-    const res = await fetch(`https://${REPO_OWNER}.github.io/${REPO_NAME}/`, { method: 'HEAD' });
-    checks.push({ name: '📡 GitHub Pages', status: res.ok, msg: res.ok ? 'فعال و در دسترس' : 'مشکل در سرویس' });
-  } catch (e) {
-    checks.push({ name: '📡 GitHub Pages', status: false, msg: 'سرویس در دسترس نیست' });
-  }
-  
-  // 4. AI API
-  try {
-    const res = await fetch('https://text.pollinations.ai/', { method: 'POST', body: JSON.stringify({ messages: [{role:'user',content:'hi'}] }) });
-    checks.push({ name: '🤖 چت‌بات AI', status: res.ok, msg: res.ok ? 'آنلاین و آماده' : 'مشکل در اتصال' });
-  } catch (e) {
-    checks.push({ name: '🤖 چت‌بات AI', status: false, msg: 'سرور AI در دسترس نیست' });
-  }
-  
-  // 5. فضای ذخیره‌سازی
-  try {
-    localStorage.setItem('test', '1');
-    localStorage.removeItem('test');
-    checks.push({ name: '💾 حافظه محلی', status: true, msg: 'سالم و قابل استفاده' });
-  } catch (e) {
-    checks.push({ name: '💾 حافظه محلی', status: false, msg: 'غیرفعال - localStorage در دسترس نیست' });
-  }
-  
-  // 6. PWA نصب
-  checks.push({ 
-    name: '📱 قابلیت نصب (PWA)', 
-    status: 'serviceWorker' in navigator, 
-    msg: 'serviceWorker' in navigator ? 'قابل نصب روی گوشی' : 'غیرفعال' 
-  });
-  
-  // نمایش نتایج
-  const allOk = checks.every(c => c.status);
-  content.innerHTML = `
-    <div style="text-align:center;margin-bottom:20px">
-      <div style="font-size:48px">${allOk ? '✅' : '⚠️'}</div>
-      <div style="font-size:14px;font-weight:700;margin-top:8px">${allOk ? 'همه چیز سالم است!' : 'برخی موارد نیاز به بررسی دارند'}</div>
-    </div>
-    ${checks.map(c => `
-      <div style="display:flex;align-items:center;gap:10px;padding:10px;margin-bottom:6px;background:var(--card);border-radius:8px;border-right:3px solid ${c.status ? 'var(--success)' : 'var(--danger)'}">
-        <div style="font-size:18px">${c.status ? '✅' : '❌'}</div>
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:700">${c.name}</div>
-          <div style="font-size:11px;color:var(--text-dim)">${c.msg}</div>
-        </div>
-      </div>
-    `).join('')}
-    <button class="btn btn-secondary btn-sm" onclick="autoFix()" style="margin-top:12px">
-      🔧 تلاش برای فیکس خودکار
-    </button>
-  `;
-}
-
-async function autoFix() {
-  showToast('در حال فیکس خودکار...', 'warn');
-  // پاک کردن کش
-  try {
-    if ('caches' in window) {
-      const keys = await caches.keys();
-      await Promise.all(keys.map(k => caches.delete(k)));
-    }
-  } catch (e) {}
-  // رفرش
-  setTimeout(() => {
-    showToast('فیکس انجام شد. صفحه رفرش می‌شود...');
-    setTimeout(() => location.reload(), 1500);
-  }, 1000);
-}
-
-// =====================================================================
-// ==================== EXPORT / IMPORT =================================
-// =====================================================================
-function exportData() {
-  const data = {
-    version: 1,
-    exported: new Date().toISOString(),
-    projects: state.projects.map(p => ({ ...p, html: undefined })), // بدون html برای کم کردن حجم
-    tokens: state.tokens.map(t => ({ ...t, value: '***' })) // بدون value واقعی
-  };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `tnt-mod-backup-${new Date().toISOString().slice(0,10)}.json`;
-  a.click();
-  showToast('خروجی گرفته شد ✓');
-}
-
-// =====================================================================
-// ==================== PWA INSTALL =====================================
-// =====================================================================
-let deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+// Ctrl+Enter
+$("htmlInput").addEventListener("keydown", e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); deploy(); }
 });
-
-async function installApp() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      showToast('نصب شروع شد!');
-    }
-    deferredPrompt = null;
-  } else {
-    showToast('برای نصب: در مرورگر گزینه "Add to Home Screen" را بزنید', 'warn');
-  }
-}
-
-// ثبت Service Worker برای PWA
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(err => console.log('SW failed:', err));
-  });
-}
-
-// =====================================================================
-// ==================== INIT ============================================
-// =====================================================================
-function init() {
-  loadState();
-  initParticles();
-  updateStats();
-  if (state.chatHistory.length > 0) {
-    // بازسازی چت
-    const msgs = $('chatMessages');
-    msgs.innerHTML = '';
-    state.chatHistory.slice(-20).forEach(m => {
-      const div = document.createElement('div');
-      div.className = 'chat-msg ' + (m.role === 'user' ? 'user' : 'bot');
-      div.innerHTML = formatChatContent(m.content);
-      msgs.appendChild(div);
-    });
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-  
-  // بررسی خودکار توکن
-  if (state.tokens.length > 0 && !state.currentTokenId) {
-    state.currentTokenId = state.tokens[0].id;
-    saveCurrentToken();
-  }
-  
-  // اضافه کردن event listener برای ورودی
-  $('chatInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendChat();
-    }
-  });
-  
-  // دکمه deploy
-  
-  console.log('%c🔥 TNT MOD....', 'font-size:24px;font-weight:bold;color:#ff5722;text-shadow:0 0 10px #ff5722');
-  console.log('%cساخته شده توسط ZODIAC_MAFIANIGHTS @ rubika.ir', 'color:#ff9800');
-}
-
-init();
+$("htmlInput").focus();
 </script>
 </body>
 </html>
