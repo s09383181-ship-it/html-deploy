@@ -416,7 +416,6 @@ textarea::placeholder{color:var(--faint);opacity:.6}
 
     <div style="margin-top:18px;padding-top:18px;border-top:1px solid var(--border)">
       <label class="lbl">افزودن توکن جدید</label>
-      <input type="text" class="inp" id="tName" placeholder="نام مستعار (مثلاً: اکانت اصلی)" style="margin-bottom:8px">
       <input type="password" class="inp" id="tValue" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
     </div>
 
@@ -581,7 +580,7 @@ function renderTokenList(){
 }
 
 async function saveToken(){
-  const name = $("tName").value.trim();
+  
   const value = $("tValue").value.trim();
   if(!value){ toast("توکن را وارد کن", "err"); return; }
   
@@ -602,7 +601,7 @@ async function saveToken(){
     // کاربر می‌تونه بعداً ویرایش کنه
     const tok = {
       id: "t"+Date.now(),
-      name: name || ("توکن " + toFa(tokens.length+1)),
+      name: "توکن",
       value,
       username: user.login,
       addedAt: new Date().toISOString(),
@@ -612,7 +611,6 @@ async function saveToken(){
     tokens.push(tok);
     if(!currentId) currentId = tok.id;
     saveTokens(); saveCur();
-    $("tName").value = "";
     $("tValue").value = "";
     renderTokenList();
     updateTokenBar();
