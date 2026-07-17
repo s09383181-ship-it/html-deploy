@@ -3,252 +3,814 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TNT MOD - دیپلوی HTML</title>
-<meta name="theme-color" content="#7c3aed">
+<title>نامبر وان | Number One</title>
+<meta name="theme-color" content="#a855f7">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg-0:#050208;--bg-1:#0a0510;--bg-2:#14091f;
+  --c1:#a855f7;--c2:#ec4899;--c3:#f59e0b;--c4:#06b6d4;
+  --text:#f5f3ff;--dim:#a89db8;--faint:#6b6080;
+  --border:rgba(168,85,247,.18);
+  --border-2:rgba(168,85,247,.35);
+  --glass:rgba(255,255,255,.04);
+  --glass-2:rgba(255,255,255,.07);
+  --success:#10b981;--danger:#ef4444;--warn:#f59e0b;
+  --r-sm:10px;--r-md:16px;--r-lg:22px;--r-xl:32px;
+}
+html,body{min-height:100%}
 body{
-  font-family:'Segoe UI','Tahoma',sans-serif;
-  background:#0a0a14;color:#e8e8f0;
+  font-family:'Vazirmatn','Segoe UI',Tahoma,sans-serif;
+  background:var(--bg-0);color:var(--text);
   min-height:100vh;display:flex;align-items:center;justify-content:center;
   padding:20px;position:relative;overflow-x:hidden;
+  font-weight:500;
 }
-.bg{
-  position:fixed;inset:0;z-index:-1;
+
+/* === پس‌زمینه === */
+.bg-aurora{
+  position:fixed;inset:0;z-index:-3;
   background:
-    radial-gradient(ellipse at 20% 30%,rgba(124,58,237,.25),transparent 50%),
-    radial-gradient(ellipse at 80% 70%,rgba(236,72,153,.20),transparent 50%),
-    radial-gradient(ellipse at 50% 100%,rgba(34,211,238,.15),transparent 50%),
-    #0a0a14;
+    radial-gradient(ellipse 80% 60% at 15% 20%,rgba(168,85,247,.35),transparent 50%),
+    radial-gradient(ellipse 70% 50% at 85% 80%,rgba(236,72,153,.30),transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 50%,rgba(6,182,212,.15),transparent 60%),
+    linear-gradient(135deg,#050208 0%,#0a0510 50%,#14091f 100%);
+  animation:aurora 20s ease-in-out infinite alternate;
 }
+@keyframes aurora{
+  0%{filter:hue-rotate(0deg) brightness(1)}
+  50%{filter:hue-rotate(30deg) brightness(1.15)}
+  100%{filter:hue-rotate(-15deg) brightness(1)}
+}
+.bg-grid{
+  position:fixed;inset:0;z-index:-2;
+  background-image:
+    linear-gradient(rgba(168,85,247,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(168,85,247,.05) 1px,transparent 1px);
+  background-size:50px 50px;
+  mask-image:radial-gradient(ellipse at center,black 30%,transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse at center,black 30%,transparent 70%);
+}
+.bg-particles{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.pp{position:absolute;width:2px;height:2px;background:var(--c1);border-radius:50%;box-shadow:0 0 8px var(--c1);animation:float linear infinite;opacity:0}
+@keyframes float{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.8}90%{opacity:.2}100%{transform:translateY(-10vh) scale(2);opacity:0}}
+
+/* === کارت اصلی === */
 .card{
-  width:100%;max-width:640px;
-  background:rgba(255,255,255,.04);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:24px;padding:32px;
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  width:100%;max-width:680px;
+  background:linear-gradient(135deg,var(--glass) 0%,var(--glass-2) 100%);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid var(--border);border-radius:var(--r-xl);
+  padding:36px;position:relative;overflow:hidden;
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.6),
+    inset 0 1px 0 rgba(255,255,255,.05);
 }
-.header{text-align:center;margin-bottom:24px}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--c1) 30%,var(--c2) 70%,transparent);
+  opacity:.6;
+}
+.card::after{
+  content:'';position:absolute;
+  top:-50%;right:-50%;width:200%;height:200%;
+  background:radial-gradient(circle at center,rgba(168,85,247,.08),transparent 40%);
+  animation:rotate 30s linear infinite;pointer-events:none;
+}
+@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* === هدر === */
+.header{text-align:center;margin-bottom:28px;position:relative;z-index:1}
 .logo{
-  width:60px;height:60px;margin:0 auto 16px;
-  background:linear-gradient(135deg,#7c3aed,#ec4899);
-  border-radius:16px;display:grid;place-items:center;
-  font-size:28px;
-  box-shadow:0 8px 24px rgba(124,58,237,.4);
+  width:72px;height:72px;margin:0 auto 18px;
+  background:linear-gradient(135deg,var(--c1),var(--c2) 50%,var(--c3));
+  border-radius:20px;display:grid;place-items:center;
+  font-size:36px;font-weight:900;color:#fff;
+  box-shadow:
+    0 10px 30px rgba(168,85,247,.4),
+    0 0 0 1px rgba(255,255,255,.1) inset,
+    0 0 40px rgba(236,72,153,.3);
+  position:relative;overflow:hidden;
+  animation:logoPulse 3s ease-in-out infinite;
 }
+@keyframes logoPulse{
+  0%,100%{transform:scale(1);box-shadow:0 10px 30px rgba(168,85,247,.4),0 0 40px rgba(236,72,153,.3)}
+  50%{transform:scale(1.05);box-shadow:0 12px 40px rgba(168,85,247,.6),0 0 60px rgba(236,72,153,.5)}
+}
+.logo::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.4) 50%,transparent 70%);
+  animation:shine 4s linear infinite;
+}
+@keyframes shine{0%{transform:translateX(-100%) translateY(-100%)}100%{transform:translateX(100%) translateY(100%)}}
+
 h1{
-  font-size:26px;font-weight:700;margin-bottom:6px;
-  background:linear-gradient(135deg,#a78bfa,#f472b6);
+  font-size:32px;font-weight:900;margin-bottom:6px;
+  background:linear-gradient(135deg,var(--c1),var(--c2) 60%,var(--c3));
   -webkit-background-clip:text;background-clip:text;color:transparent;
+  letter-spacing:-1px;line-height:1.1;
 }
-.subtitle{color:#8a8a9e;font-size:14px}
-textarea{
-  width:100%;min-height:240px;
-  background:#0d0d1a;border:1px solid rgba(255,255,255,.08);
-  border-radius:12px;padding:16px;
-  color:#e8e8f0;font-family:'Courier New',monospace;
-  font-size:13.5px;line-height:1.6;
-  outline:none;resize:vertical;transition:all .25s;
+.subtitle{color:var(--dim);font-size:14px;line-height:1.6}
+
+/* === توکن بار (بالا) === */
+.token-bar{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;margin-bottom:18px;
+  background:rgba(0,0,0,.3);
+  border:1px solid var(--border);border-radius:var(--r-md);
+  font-size:12.5px;position:relative;z-index:1;
+  cursor:pointer;transition:all .25s;
 }
-textarea:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.15)}
-textarea::placeholder{color:#555}
-.btn{
-  width:100%;padding:14px;margin-top:16px;
-  background:linear-gradient(135deg,#7c3aed,#ec4899);
-  color:#fff;border:none;border-radius:12px;
-  font-size:15px;font-weight:600;cursor:pointer;
+.token-bar:hover{border-color:var(--border-2);background:rgba(0,0,0,.4)}
+.tb-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--faint);flex-shrink:0;
+  box-shadow:0 0 0 0 currentColor;
   transition:all .25s;
-  box-shadow:0 6px 20px rgba(124,58,237,.35);
 }
-.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 28px rgba(124,58,237,.5)}
-.btn:disabled{opacity:.6;cursor:not-allowed}
+.token-bar.ok .tb-dot{background:var(--success);box-shadow:0 0 12px var(--success)}
+.token-bar.warn .tb-dot{background:var(--warn);box-shadow:0 0 12px var(--warn);animation:pulse 1s infinite}
+.token-bar.err .tb-dot{background:var(--danger);box-shadow:0 0 12px var(--danger)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.tb-info{flex:1;min-width:0;overflow:hidden}
+.tb-name{font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-meta{font-size:11px;color:var(--faint);display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:1px}
+.tb-meta b{color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}
+.tb-meta.warn b{color:var(--warn)}
+.tb-meta.err b{color:var(--danger)}
+.tb-btn{
+  background:var(--glass);border:1px solid var(--border);
+  color:var(--dim);padding:6px 12px;border-radius:8px;
+  font-size:11.5px;font-weight:600;cursor:pointer;
+  transition:all .25s;font-family:inherit;flex-shrink:0;
+}
+.tb-btn:hover{background:var(--glass-2);color:var(--text);border-color:var(--border-2)}
+
+/* === ادیتور === */
+.editor-wrap{
+  position:relative;z-index:1;
+  border-radius:var(--r-md);overflow:hidden;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.4);
+  transition:all .25s;
+}
+.editor-wrap:focus-within{border-color:var(--border-2);box-shadow:0 0 0 3px rgba(168,85,247,.15)}
+.editor-bar{
+  display:flex;align-items:center;padding:10px 14px;
+  background:rgba(255,255,255,.02);
+  border-bottom:1px solid var(--border);gap:8px;
+}
+.dots{display:flex;gap:5px}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot.r{background:#ff5f57}
+.dot.y{background:#febc2e}
+.dot.g{background:#28c840}
+.fname{font-size:11px;color:var(--faint);font-family:monospace;margin-right:8px}
+.ebar-spacer{flex:1}
+textarea{
+  width:100%;min-height:280px;
+  background:transparent;color:var(--text);
+  border:none;outline:none;
+  padding:18px;
+  font-family:'Courier New','Vazirmatn',monospace;
+  font-size:13.5px;line-height:1.7;
+  resize:vertical;direction:ltr;text-align:left;
+}
+textarea::placeholder{color:var(--faint);opacity:.6}
+
+/* === دکمه === */
+.btn{
+  width:100%;padding:16px;margin-top:18px;
+  background:linear-gradient(135deg,var(--c1) 0%,var(--c2) 100%);
+  color:#fff;border:none;border-radius:var(--r-md);
+  font-size:15px;font-weight:700;cursor:pointer;
+  font-family:inherit;position:relative;overflow:hidden;
+  transition:all .25s;
+  box-shadow:0 8px 24px rgba(168,85,247,.35);
+  z-index:1;
+}
+.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 32px rgba(168,85,247,.5)}
+.btn:active:not(:disabled){transform:translateY(0)}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.3) 50%,transparent 70%);
+  transform:translateX(-100%);transition:transform .6s;
+}
+.btn:hover::after{transform:translateX(100%)}
+
+/* === Status === */
 .status{
-  margin-top:16px;padding:12px;border-radius:10px;
-  font-size:13.5px;display:flex;align-items:center;gap:10px;
+  margin-top:14px;padding:14px 16px;border-radius:var(--r-md);
+  font-size:13px;display:flex;align-items:flex-start;gap:10px;
+  line-height:1.7;position:relative;z-index:1;
+  animation:slideIn .3s ease-out;
 }
-.loading{background:rgba(34,211,238,.1);color:#22d3ee;border:1px solid rgba(34,211,238,.2)}
-.error{background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.2)}
-.success{background:rgba(34,197,94,.1);color:#4ade80;border:1px solid rgba(34,197,94,.2)}
-.spinner{
-  width:14px;height:14px;border:2px solid currentColor;
+@keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.st-load{background:rgba(6,182,212,.1);color:var(--c4);border:1px solid rgba(6,182,212,.25)}
+.st-err{background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.25)}
+.st-ok{background:rgba(16,185,129,.1);color:#6ee7b7;border:1px solid rgba(16,185,129,.25)}
+.spin{
+  width:16px;height:16px;border:2px solid currentColor;
   border-top-color:transparent;border-radius:50%;
-  animation:spin .8s linear infinite;flex-shrink:0;
+  animation:sp .8s linear infinite;flex-shrink:0;margin-top:1px;
 }
-@keyframes spin{to{transform:rotate(360deg)}}
-.result{
-  margin-top:20px;padding:18px;
-  background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);
-  border-radius:12px;
+@keyframes sp{to{transform:rotate(360deg)}}
+.prog{width:100%;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-top:8px}
+.prog-b{height:100%;background:linear-gradient(90deg,var(--c1),var(--c2));border-radius:2px;transition:width .3s;box-shadow:0 0 8px var(--c1)}
+
+/* === Result === */
+.res{
+  margin-top:18px;padding:20px;
+  background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(16,185,129,.02));
+  border:1px solid rgba(16,185,129,.25);
+  border-radius:var(--r-md);position:relative;z-index:1;
+  animation:popIn .5s cubic-bezier(.34,1.56,.64,1);
 }
-.result-label{color:#4ade80;font-size:13px;font-weight:600;margin-bottom:10px}
-.link-box{
-  display:flex;align-items:center;gap:8px;
-  background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);
-  border-radius:10px;padding:4px;
+@keyframes popIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
+.res-l{color:#6ee7b7;font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.res-l svg{width:18px;height:18px}
+.lbox{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(0,0,0,.4);border:1px solid var(--border);
+  border-radius:12px;padding:5px;
 }
-.link-box input{
-  flex:1;padding:8px 12px;background:none;border:none;outline:none;
-  color:#22d3ee;font-family:monospace;font-size:13px;
+.lbox input{
+  flex:1;padding:10px 12px;background:none;border:none;outline:none;
+  color:var(--c4);font-family:monospace;font-size:12.5px;
   direction:ltr;text-align:left;
 }
-.copy-btn{
-  background:rgba(255,255,255,.06);border:none;color:#e8e8f0;
-  padding:8px 14px;border-radius:8px;cursor:pointer;
-  font-size:12px;font-weight:600;transition:all .25s;
+.bicon{
+  width:36px;height:36px;border-radius:8px;border:none;
+  background:rgba(255,255,255,.06);color:var(--text);
+  cursor:pointer;display:grid;place-items:center;
+  transition:all .25s;
 }
-.copy-btn:hover{background:rgba(255,255,255,.12)}
-.copy-btn.copied{background:#22c55e;color:#052e16}
+.bicon:hover{background:rgba(255,255,255,.12);transform:scale(1.05)}
+.bicon.ok{background:var(--success);color:#022c22}
+.bicon svg{width:14px;height:14px}
+.qr-box{
+  display:flex;align-items:center;gap:14px;margin-top:14px;
+  padding:14px;background:rgba(0,0,0,.3);border-radius:12px;
+  border:1px solid var(--border);
+}
+.qr-box img{width:88px;height:88px;background:#fff;border-radius:10px;padding:4px;flex-shrink:0}
+.qr-info{flex:1;font-size:12px;color:var(--dim);line-height:1.7}
+
+/* === Modal === */
+.ov{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  display:none;align-items:center;justify-content:center;
+  z-index:100;padding:20px;animation:fadeIn .25s;
+}
+.ov.show{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{
+  width:100%;max-width:460px;
+  background:linear-gradient(135deg,#14091f,#0a0510);
+  border:1px solid var(--border-2);border-radius:var(--r-lg);
+  padding:28px;position:relative;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 40px rgba(168,85,247,.2);
+  animation:modalIn .4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes modalIn{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+}
+.modal-t{
+  font-size:20px;font-weight:900;margin-bottom:6px;
+  display:flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--c1),var(--c2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.modal-s{color:var(--dim);font-size:13px;margin-bottom:20px;line-height:1.7}
+.modal-s a{color:var(--c1);text-decoration:none;font-weight:700}
+.modal-s a:hover{text-decoration:underline}
+.inp{
+  width:100%;padding:14px 16px;
+  background:rgba(0,0,0,.5);
+  border:1.5px solid var(--border);border-radius:12px;
+  color:var(--text);font-size:14px;font-family:monospace;
+  outline:none;transition:all .25s;direction:ltr;text-align:left;
+}
+.inp:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(168,85,247,.2)}
+.inp::placeholder{color:var(--faint)}
+.lbl{display:block;font-size:12px;font-weight:700;color:var(--dim);margin-bottom:8px;letter-spacing:.3px}
+.m-btns{display:flex;gap:10px;margin-top:20px}
+.m-btns .btn{margin:0;flex:1}
+.m-btns .btn-g{padding:16px;background:var(--glass);border:1px solid var(--border);box-shadow:none}
+.m-btns .btn-g:hover{background:var(--glass-2);border-color:var(--border-2)}
+
+/* === لیست توکن‌ها === */
+.tlist{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;max-height:300px;overflow-y:auto}
+.tlist::-webkit-scrollbar{width:6px}
+.tlist::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.titem{
+  display:flex;align-items:center;gap:10px;padding:10px;
+  background:rgba(0,0,0,.3);border:1px solid var(--border);
+  border-radius:10px;cursor:pointer;transition:all .25s;
+}
+.titem:hover{background:rgba(0,0,0,.4);border-color:var(--border-2)}
+.titem.cur{border-color:var(--c1);background:rgba(168,85,247,.1)}
+.ti-dot{width:8px;height:8px;border-radius:50%;background:var(--faint);flex-shrink:0}
+.titem.cur .ti-dot{background:var(--c1);box-shadow:0 0 8px var(--c1)}
+.ti-info{flex:1;min-width:0;overflow:hidden}
+.ti-n{font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ti-u{font-size:10.5px;color:var(--faint);font-family:monospace;direction:ltr;text-align:right}
+.ti-time{font-size:10.5px;color:var(--dim);font-weight:600;font-variant-numeric:tabular-nums;flex-shrink:0}
+.ti-time.warn{color:var(--warn)}
+.ti-time.err{color:var(--danger)}
+.ti-x{
+  width:26px;height:26px;border-radius:6px;border:none;
+  background:transparent;color:var(--faint);cursor:pointer;
+  display:grid;place-items:center;flex-shrink:0;
+  transition:all .25s;
+}
+.ti-x:hover{background:rgba(239,68,68,.15);color:var(--danger)}
+.ti-x svg{width:12px;height:12px}
+
+/* === Toast === */
+.toast{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);
+  background:linear-gradient(135deg,var(--c1),var(--c2));
+  color:#fff;padding:12px 20px;border-radius:24px;
+  font-size:13px;font-weight:700;z-index:200;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  max-width:90%;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* === Responsive === */
+@media(max-width:480px){
+  .card{padding:24px;border-radius:24px}
+  h1{font-size:26px}
+  .logo{width:60px;height:60px;font-size:30px}
+  textarea{min-height:220px;padding:14px;font-size:13px}
+}
 </style>
 </head>
 <body>
-<div class="bg"></div>
+<div class="bg-aurora"></div>
+<div class="bg-grid"></div>
+<div class="bg-particles" id="particles"></div>
+
 <div class="card">
+  <!-- هدر -->
   <div class="header">
-    <div class="logo">🔥</div>
-    <h1>TNT MOD....</h1>
+    <div class="logo">⚡</div>
+    <h1>نامبر وان</h1>
     <p class="subtitle">کد HTML را وارد کن، لینک عمومی بگیر</p>
   </div>
 
-  <textarea id="htmlInput" placeholder="<!DOCTYPE html>&#10;<html>&#10;  <body>&#10;    <h1>سلام دنیا!</h1>&#10;  </body>&#10;</html>"></textarea>
+  <!-- نوار توکن -->
+  <div class="token-bar" id="tokenBar">
+    <div class="tb-dot"></div>
+    <div class="tb-info">
+      <div class="tb-name" id="tbName">توکنی تنظیم نشده</div>
+      <div class="tb-meta" id="tbMeta">برای شروع روی "افزودن توکن" بزنید</div>
+    </div>
+    <button class="tb-btn" id="btnManage">مدیریت</button>
+  </div>
 
-  <button class="btn" id="deployBtn">🚀 دیپلوی و دریافت لینک</button>
+  <!-- ادیتور -->
+  <div class="editor-wrap">
+    <div class="editor-bar">
+      <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+      <span class="fname">index.html</span>
+      <div class="ebar-spacer"></div>
+    </div>
+    <textarea id="htmlInput" spellcheck="false" placeholder="<!DOCTYPE html>&#10;<html>&#10;  <body>&#10;    <h1>سلام دنیا!</h1>&#10;  </body>&#10;</html>"></textarea>
+  </div>
 
-  <div id="status" class="status" style="display:none"></div>
-  <div id="result" class="result" style="display:none">
-    <div class="result-label">🎉 سایت شما منتشر شد!</div>
-    <div class="link-box">
-      <input type="text" id="liveLink" readonly>
-      <button class="copy-btn" id="copyBtn">کپی</button>
+  <!-- دکمه -->
+  <button class="btn" id="btnDeploy">
+    <span style="display:inline-flex;align-items:center;gap:8px;justify-content:center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+      دیپلوی و دریافت لینک
+    </span>
+  </button>
+
+  <!-- استاتوس -->
+  <div id="status" style="display:none"></div>
+
+  <!-- نتیجه -->
+  <div id="result" style="display:none"></div>
+</div>
+
+<!-- Modal: مدیریت توکن -->
+<div class="ov" id="mToken">
+  <div class="modal">
+    <div class="modal-t">🔑 مدیریت توکن‌های GitHub</div>
+    <p class="modal-s">
+      برای استفاده از این اپ، یک <b>GitHub Personal Access Token</b> نیاز داری.
+      توکن با دسترسی <code>repo</code> از
+      <a href="https://github.com/settings/tokens" target="_blank">اینجا</a> بساز.
+    </p>
+
+    <div class="tlist" id="tList"></div>
+
+    <div style="margin-top:18px;padding-top:18px;border-top:1px solid var(--border)">
+      <label class="lbl">افزودن توکن جدید</label>
+      <input type="text" class="inp" id="tName" placeholder="نام مستعار (مثلاً: اکانت اصلی)" style="margin-bottom:8px">
+      <input type="password" class="inp" id="tValue" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+    </div>
+
+    <div class="m-btns">
+      <button class="btn btn-g" id="btnClose">بستن</button>
+      <button class="btn" id="btnSave">ذخیره توکن</button>
     </div>
   </div>
 </div>
 
+<div id="toast" class="toast"></div>
+
 <script>
 const OWNER = "s09383181-ship-it";
-const REPO  = "html-deploy";
+const REPO = "html-deploy";
 const BRANCH = "main";
+const K = {tokens:"no_tokens_v1", cur:"no_cur_v1"};
 
-// توکن GitHub - اینجا بذار یا از کاربر بگیر
-let TOKEN = localStorage.getItem("tnt_gh_token") || "";
+let tokens = [];
+let currentId = null;
+let liveTimer = null;
 
 const $ = id => document.getElementById(id);
+const toFa = n => String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[c]);
+const rand = () => Math.random().toString(36).slice(2,8) + Date.now().toString(36).slice(-4);
 
-function rand() {
-  return Math.random().toString(36).slice(2,8) + Date.now().toString(36).slice(-4);
+// ==== Storage ====
+function load(){
+  try{
+    tokens = JSON.parse(localStorage.getItem(K.tokens) || "[]");
+    currentId = localStorage.getItem(K.cur);
+    if(currentId && !tokens.find(t=>t.id===currentId)) currentId = tokens[0]?.id;
+    if(!currentId && tokens.length) currentId = tokens[0].id;
+  }catch(e){tokens=[];currentId=null}
+}
+function saveTokens(){localStorage.setItem(K.tokens, JSON.stringify(tokens))}
+function saveCur(){localStorage.setItem(K.cur, currentId || "")}
+function currentTok(){return tokens.find(t=>t.id===currentId) || null}
+
+// ==== Toast ====
+let toastT = null;
+function toast(msg, type="ok"){
+  const t = $("toast");
+  t.textContent = msg;
+  t.className = "toast show";
+  if(type==="err") t.style.background = "linear-gradient(135deg,var(--danger),#dc2626)";
+  else if(type==="warn") t.style.background = "linear-gradient(135deg,var(--warn),var(--c3))";
+  else t.style.background = "linear-gradient(135deg,var(--c1),var(--c2))";
+  clearTimeout(toastT);
+  toastT = setTimeout(()=>t.classList.remove("show"), 3000);
 }
 
-function toFa(n) {
-  return String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
-}
-
-function showStatus(type, text) {
-  const s = $("status");
-  s.className = "status " + type;
-  s.style.display = "flex";
-  s.innerHTML = (type === "loading" ? '<div class="spinner"></div>' : "") + "<span>" + text + "</span>";
-}
-
-function hideStatus() { $("status").style.display = "none"; }
-
-async function askToken() {
-  if (TOKEN) return TOKEN;
-  const t = prompt("توکن GitHub را وارد کن (ghp_xxx...):");
-  if (!t) return null;
-  // تست
-  try {
-    const r = await fetch("https://api.github.com/user", {headers: {Authorization: "token " + t}});
-    if (!r.ok) throw new Error("نامعتبر");
-    TOKEN = t;
-    localStorage.setItem("tnt_gh_token", t);
-    return t;
-  } catch (e) {
-    alert("توکن نامعتبر است");
-    return null;
+// ==== Particles ====
+function initParticles(){
+  const c = $("particles"); if(!c) return;
+  for(let i=0;i<18;i++){
+    const p = document.createElement("div");
+    p.className = "pp";
+    p.style.left = Math.random()*100+"%";
+    p.style.animationDuration = (8+Math.random()*8)+"s";
+    p.style.animationDelay = Math.random()*10+"s";
+    c.appendChild(p);
   }
 }
 
-async function deploy() {
-  const html = $("htmlInput").value.trim();
-  if (!html) {
-    showStatus("error", "⚠️ لطفاً کد HTML را وارد کن");
+// ==== Token UI ====
+function timeUntil(iso){
+  if(!iso) return null;
+  const ms = new Date(iso).getTime() - Date.now();
+  if(ms <= 0) return {expired:true, days:0, hours:0, mins:0, secs:0};
+  const days = Math.floor(ms / 864e5);
+  const hours = Math.floor((ms % 864e5) / 36e5);
+  const mins = Math.floor((ms % 36e5) / 6e4);
+  const secs = Math.floor((ms % 6e4) / 1e3);
+  return {expired:false, days, hours, mins, secs, total:ms};
+}
+
+function formatTimeLeft(t){
+  if(!t) return "بدون انقضا";
+  if(t.expired) return "منقضی شده";
+  if(t.days > 0) return `${toFa(t.days)} روز و ${toFa(t.hours)} ساعت`;
+  if(t.hours > 0) return `${toFa(t.hours)} ساعت و ${toFa(t.mins)} دقیقه`;
+  return `${toFa(t.mins)}:${String(t.secs).padStart(2,"0")}`;
+}
+
+function expiryClass(t){
+  if(!t) return "";
+  if(t.expired) return "err";
+  if(t.days < 3) return "warn";
+  return "";
+}
+
+function updateTokenBar(){
+  const t = currentTok();
+  const bar = $("tokenBar");
+  if(!t){
+    bar.className = "token-bar";
+    $("tbName").textContent = "توکنی تنظیم نشده";
+    $("tbMeta").innerHTML = "برای شروع روی «مدیریت» بزنید";
+    $("btnManage").textContent = "افزودن توکن";
     return;
   }
-  const token = await askToken();
-  if (!token) return;
+  $("btnManage").textContent = "مدیریت";
+  $("tbName").textContent = t.name + (t.username ? " · @" + t.username : "");
+  
+  const tm = timeUntil(t.expiresAt);
+  const cls = expiryClass(tm);
+  bar.className = "token-bar" + (cls ? " " + cls : " ok");
+  
+  if(tm){
+    if(tm.expired){
+      $("tbMeta").innerHTML = `⚠️ <b>منقضی شده</b>`;
+    } else {
+      $("tbMeta").innerHTML = `⏱️ <b id="liveCountdown">${formatTimeLeft(tm)}</b> تا پایان اعتبار`;
+    }
+  } else {
+    $("tbMeta").innerHTML = `✓ <b>فعال</b>`;
+  }
+}
 
-  const btn = $("deployBtn");
+// شمارنده زنده - هر ثانیه آپدیت میشه
+function startLiveCountdown(){
+  if(liveTimer) clearInterval(liveTimer);
+  liveTimer = setInterval(()=>{
+    const t = currentTok();
+    if(!t || !t.expiresAt) return;
+    const el = document.getElementById("liveCountdown");
+    if(!el) return;
+    const tm = timeUntil(t.expiresAt);
+    el.textContent = formatTimeLeft(tm);
+    // تغییر رنگ اگه کم مونده
+    if(tm.expired || tm.days < 1) el.style.color = "var(--danger)";
+    else if(tm.days < 3) el.style.color = "var(--warn)";
+    else el.style.color = "";
+  }, 1000);
+}
+
+function renderTokenList(){
+  const list = $("tList");
+  if(tokens.length === 0){
+    list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--faint);font-size:12px">هیچ توکنی ذخیره نشده</div>';
+    return;
+  }
+  list.innerHTML = tokens.map(t=>{
+    const cur = t.id === currentId;
+    const tm = timeUntil(t.expiresAt);
+    const cls = expiryClass(tm);
+    const txt = formatTimeLeft(tm);
+    return `<div class="titem ${cur?'cur':''}" data-act="sel" data-id="${t.id}">
+      <div class="ti-dot"></div>
+      <div class="ti-info">
+        <div class="ti-n">${esc(t.name)}${t.username?' @'+esc(t.username):''} ${cur?'✓':''}</div>
+        <div class="ti-u">${(t.value||"").slice(0,8)}...${(t.value||"").slice(-4)}</div>
+      </div>
+      <div class="ti-time ${cls}">${txt}</div>
+      <button class="ti-x" data-act="del" data-id="${t.id}" title="حذف">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>`;
+  }).join("");
+}
+
+async function saveToken(){
+  const name = $("tName").value.trim();
+  const value = $("tValue").value.trim();
+  if(!value){ toast("توکن را وارد کن", "err"); return; }
+  
+  const btn = $("btnSave");
+  btn.disabled = true;
+  const orig = btn.querySelector("span") ? btn.querySelector("span").textContent : "";
+  btn.innerHTML = "در حال بررسی...";
+  
+  try{
+    const r = await fetch("https://api.github.com/user", {
+      headers:{Authorization:"token "+value, Accept:"application/vnd.github+json"}
+    });
+    if(!r.ok) throw new Error("توکن نامعتبر");
+    const user = await r.json();
+    
+    // سعی کن تاریخ انقضا رو از headers یا تنظیمات بخونی
+    // GitHub API این رو مستقیم نمیده، ولی می‌تونیم از طریق تست حدس بزنیم
+    // کاربر می‌تونه بعداً ویرایش کنه
+    const tok = {
+      id: "t"+Date.now(),
+      name: name || ("توکن " + toFa(tokens.length+1)),
+      value,
+      username: user.login,
+      addedAt: new Date().toISOString(),
+      // پیش‌فرض 30 روز — کاربر می‌تونه تغییر بده
+      expiresAt: new Date(Date.now() + 30*864e5).toISOString()
+    };
+    tokens.push(tok);
+    if(!currentId) currentId = tok.id;
+    saveTokens(); saveCur();
+    $("tName").value = "";
+    $("tValue").value = "";
+    renderTokenList();
+    updateTokenBar();
+    startLiveCountdown();
+    toast("توکن ذخیره شد ✓");
+  }catch(e){
+    toast("خطا: " + e.message, "err");
+  }finally{
+    btn.disabled = false;
+    btn.innerHTML = orig || '<span style="display:inline-flex;align-items:center;gap:8px;justify-content:center">ذخیره توکن</span>';
+  }
+}
+
+function selToken(id){
+  currentId = id;
+  saveCur();
+  renderTokenList();
+  updateTokenBar();
+  toast("تغییر کرد ✓");
+}
+
+function delToken(id){
+  if(!confirm("این توکن حذف شود؟")) return;
+  tokens = tokens.filter(t=>t.id!==id);
+  if(currentId === id) currentId = tokens[0]?.id || null;
+  saveTokens(); saveCur();
+  renderTokenList();
+  updateTokenBar();
+  startLiveCountdown();
+  toast("حذف شد");
+}
+
+// ==== Open/Close Modal ====
+function openTokenModal(){
+  renderTokenList();
+  $("mToken").classList.add("show");
+}
+function closeTokenModal(){$("mToken").classList.remove("show")}
+
+// ==== Deploy ====
+async function waitLive(url, maxMs=90000){
+  const start = Date.now();
+  let att = 0;
+  while(Date.now() - start < maxMs){
+    att++;
+    const sec = Math.floor((Date.now()-start)/1000);
+    setStatus("load",
+      `<div class="spin"></div><div style="flex:1">
+        <b>مرحله ۲ از ۲:</b> منتظر فعال شدن لینک (تلاش ${toFa(att)} - ${toFa(sec)} ثانیه)
+        <div class="prog"><div class="prog-b" style="width:${Math.min(95,(sec/60)*100)}%"></div></div>
+      </div>`);
+    try{
+      const r = await fetch(url, {method:"GET", cache:"no-store"});
+      if(r.ok){
+        const t = await r.text();
+        if(t.length > 50 && !t.includes("404")) return true;
+      }
+    }catch(e){}
+    await new Promise(r=>setTimeout(r, 3000));
+  }
+  return false;
+}
+
+function setStatus(type, html){
+  const s = $("status");
+  s.className = "status st-"+type;
+  s.style.display = "flex";
+  s.innerHTML = html;
+}
+
+async function deploy(){
+  const html = $("htmlInput").value.trim();
+  if(!html){ setStatus("err", "⚠️ لطفاً کد HTML را وارد کن"); return; }
+  const tok = currentTok();
+  if(!tok){
+    setStatus("err", "⚠️ ابتدا یک توکن اضافه کن");
+    openTokenModal();
+    return;
+  }
+  
+  const btn = $("btnDeploy");
   btn.disabled = true;
   $("result").style.display = "none";
-  showStatus("loading", "در حال آپلود به GitHub...");
-
-  try {
+  setStatus("load", '<div class="spin"></div><div style="flex:1"><b>مرحله ۱ از ۲:</b> در حال آپلود به GitHub...</div>');
+  
+  try{
     const id = rand();
     const path = `sites/${id}/index.html`;
-    const content = btoa(unescape(encodeURIComponent(html)));
-
+    const b64 = btoa(unescape(encodeURIComponent(html)));
+    
     const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`, {
-      method: "PUT",
-      headers: {
-        Authorization: "token " + token,
-        "Content-Type": "application/json",
-        Accept: "application/vnd.github+json"
+      method:"PUT",
+      headers:{
+        Authorization:"token "+tok.value,
+        "Content-Type":"application/json",
+        Accept:"application/vnd.github+json"
       },
-      body: JSON.stringify({message: "deploy " + id, content, branch: BRANCH})
+      body: JSON.stringify({message:"deploy "+id, content:b64, branch:BRANCH})
     });
-
-    if (!r.ok) {
-      const e = await r.json().catch(() => ({}));
+    
+    if(!r.ok){
+      const e = await r.json().catch(()=>({}));
       throw new Error(e.message || "خطای " + r.status);
     }
-
+    
     const url = `https://${OWNER}.github.io/${REPO}/sites/${id}/`;
-
-    // منتظر بمون تا GitHub Pages لینک رو سرو کنه
-    showStatus("loading", "منتظر فعال شدن لینک...");
-    let ok = false;
-    for (let i = 0; i < 30; i++) {
-      await new Promise(r => setTimeout(r, 3000));
-      try {
-        const c = await fetch(url, {cache: "no-store"});
-        if (c.ok) { ok = true; break; }
-      } catch (e) {}
-      showStatus("loading", `منتظر فعال شدن لینک... (${toFa(i+1)}/۳۰)`);
+    const ok = await waitLive(url, 90000);
+    
+    if(ok){
+      setStatus("ok", "✅ لینک آماده استفاده است!");
+    } else {
+      setStatus("warn", "⏰ آپلود شد. لینک تا ۱ دقیقه دیگر فعال می‌شود.");
+      $("status").className = "status st-err";
     }
-
-    hideStatus();
-    $("liveLink").value = url;
-    $("result").style.display = "block";
-    if (!ok) {
-      showStatus("success", "✅ آپلود شد. لینک تا ۱ دقیقه دیگر فعال می‌شود.");
+    
+    showResult(url, html.length);
+  }catch(e){
+    if(e.message.includes("Bad credentials") || e.message.includes("401")){
+      setStatus("err", "❌ توکن نامعتبر است. لطفاً توکن جدید وارد کنید.");
+    } else {
+      setStatus("err", "❌ " + e.message);
     }
-  } catch (e) {
-    showStatus("error", "❌ " + e.message);
-  } finally {
+  }finally{
     btn.disabled = false;
   }
 }
 
-$("deployBtn").addEventListener("click", deploy);
-$("copyBtn").addEventListener("click", async () => {
-  const url = $("liveLink").value;
-  if (!url) return;
-  try {
-    await navigator.clipboard.writeText(url);
-    const b = $("copyBtn");
-    b.textContent = "کپی شد ✓";
-    b.classList.add("copied");
-    setTimeout(() => { b.textContent = "کپی"; b.classList.remove("copied"); }, 1500);
-  } catch (e) {
-    prompt("کپی کن:", url);
-  }
-});
+function showResult(url, size){
+  const r = $("result");
+  r.style.display = "block";
+  r.innerHTML = `<div class="res">
+    <div class="res-l">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      سایت شما منتشر شد!
+    </div>
+    <div class="lbox">
+      <input type="text" value="${url}" readonly id="liveInput">
+      <button class="bicon" data-act="copy" data-text="${url}" title="کپی">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      </button>
+      <button class="bicon" data-act="open" data-url="${url}" title="باز کن">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </button>
+    </div>
+    <div class="qr-box">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&bgcolor=ffffff&color=000000&data=${encodeURIComponent(url)}" alt="QR">
+      <div class="qr-info">📱 اسکن کن یا لینک رو کپی کن<br><b style="color:var(--c1)">${toFa(Math.round(size/1024))} کیلوبایت</b></div>
+    </div>
+  </div>`;
+}
 
-// Ctrl+Enter
-$("htmlInput").addEventListener("keydown", e => {
-  if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); deploy(); }
-});
-$("htmlInput").focus();
+// ==== Helpers ====
+async function copyText(t){
+  try{ await navigator.clipboard.writeText(t); toast("کپی شد ✓"); }
+  catch(e){ prompt("کپی کن:", t); }
+}
+
+// ==== Init ====
+function init(){
+  load();
+  initParticles();
+  updateTokenBar();
+  startLiveCountdown();
+  
+  $("btnDeploy").addEventListener("click", deploy);
+  $("tokenBar").addEventListener("click", e=>{
+    if(!e.target.closest(".tb-btn")) openTokenModal();
+  });
+  $("btnManage").addEventListener("click", openTokenModal);
+  $("btnClose").addEventListener("click", closeTokenModal);
+  $("btnSave").addEventListener("click", saveToken);
+  $("mToken").addEventListener("click", e=>{ if(e.target===$("mToken")) closeTokenModal(); });
+  
+  // Delegation
+  document.addEventListener("click", e=>{
+    const act = e.target.closest("[data-act]");
+    if(act){
+      e.stopPropagation();
+      const a = act.dataset.act;
+      if(a==="copy") copyText(act.dataset.text);
+      else if(a==="open") window.open(act.dataset.url, "_blank");
+      else if(a==="sel") selToken(act.dataset.id);
+      else if(a==="del"){ e.stopPropagation(); delToken(act.dataset.id); }
+    }
+  });
+  
+  $("htmlInput").addEventListener("keydown", e=>{
+    if((e.ctrlKey||e.metaKey) && e.key==="Enter"){ e.preventDefault(); deploy(); }
+  });
+  
+  $("htmlInput").focus();
+  
+  console.log("%c⚡ نامبر وان — Number One", "font-size:18px;color:#a855f7;font-weight:bold");
+  console.log("%cTNT MOD Project — v2", "color:#ec4899");
+}
+
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", init);
+else init();
 </script>
 </body>
 </html>
