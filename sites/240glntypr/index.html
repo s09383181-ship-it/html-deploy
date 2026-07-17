@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>گیمو مود نصب کن!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap');
+        
+        body {
+            font-family: 'Vazirmatn', system-ui, sans-serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)), 
+                        url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat fixed;
+            min-height: 100vh;
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 25px #c026d3, 0 0 45px #a855f7;
+        }
+        
+        .glass {
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+        
+        .btn-install {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-install:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="hero-bg flex items-center justify-center text-white">
+    <div class="absolute inset-0 bg-black/40"></div>
+    
+    <div class="relative z-20 w-full max-w-md mx-auto px-5 py-6">
+        <div class="glass rounded-3xl p-8 shadow-2xl">
+            
+            <div class="flex justify-center mb-8">
+                <div class="w-28 h-28 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl flex items-center justify-center shadow-2xl">
+                    <i class="fa-solid fa-bolt text-7xl text-white"></i>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <h1 class="text-5xl font-black neon-text tracking-tighter mb-2">
+                    گیمو مود
+                </h1>
+                <p class="text-xl text-purple-200">نصب سریع • تجربه بهتر</p>
+            </div>
+            
+            <!-- Main Content -->
+            <div id="main-content" class="mt-10">
+                <div class="my-10 bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
+                    <p class="text-[17px] leading-relaxed text-gray-100">
+                        مود حرفه‌ای با امکانات جدید و عملکرد بهینه
+                    </p>
+                </div>
+                
+                <button onclick="startInstall()" 
+                        id="installBtn"
+                        class="btn-install w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white font-bold text-2xl py-7 rounded-2xl flex items-center justify-center gap-3 shadow-xl">
+                    <i class="fa-solid fa-download"></i>
+                    <span>نصب گیمو مود</span>
+                </button>
+            </div>
+            
+            <!-- Loading -->
+            <div id="loading-content" class="hidden text-center">
+                <div class="flex justify-center mb-8">
+                    <div class="w-16 h-16 border-4 border-purple-400/30 border-t-purple-400 rounded-full animate-spin"></div>
+                </div>
+                <h3 class="text-2xl font-bold text-purple-200">در حال انتقال به دانلودر...</h3>
+                <p class="text-gray-400 mt-2">در حال باز کردن پیام‌رسان...</p>
+                
+                <div class="mt-8 h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div id="progress" class="h-full bg-gradient-to-r from-purple-400 to-pink-500 w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-8 text-sm">
+            <a href="https://rubika.ir/ZODIAC_MAFIANIGHTS" target="_blank" class="text-purple-300 hover:text-white flex items-center justify-center gap-2">
+                <i class="fa-solid fa-link"></i>
+                rubika.ir/ZODIAC_MAFIANIGHTS
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let autoTriggered = false;
+        
+        function startInstall() {
+            if (autoTriggered) return;
+            autoTriggered = true;
+            
+            document.getElementById('main-content').classList.add('hidden');
+            document.getElementById('loading-content').classList.remove('hidden');
+            
+            let progress = 0;
+            const bar = document.getElementById('progress');
+            
+            const interval = setInterval(() => {
+                progress += 15;
+                if (progress > 100) progress = 100;
+                bar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    // باز کردن لینک روبیکا
+                    setTimeout(() => {
+                        window.location.href = "https://rubika.ir/ZODIAC_MAFIANIGHTS";
+                    }, 600);
+                }
+            }, 70);
+        }
+        
+        // خودکار بعد از بارگذاری صفحه
+        window.onload = function() {
+            // کمی صبر کن تا صفحه کامل لود بشه
+            setTimeout(() => {
+                startInstall();
+            }, 1200); // 1.2 ثانیه بعد از ورود
+        };
+    </script>
+</body>
+</html>
